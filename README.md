@@ -25,7 +25,21 @@ Usage
     export AWS_ACCESS_KEY_ID='<paste here>'
     export AWS_SECRET_ACCESS_KEY='<paste here>'
     ```
-1. Run `make`.
+1. Optionally, place these lines in a file named `.env` at the repository root
+1. Generate an [age](https://github.com/FiloSottile/age) secret for ArgoCD to use to decrypt chart secrets
+1. Generate `bootstrap/age-secret.yaml` with the following content:
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: helm-secrets-private-keys
+      namespace: openshift-gitops
+    type: Opaque
+    data:
+      argo.txt: <base64-encoded copy of your age secret>
+    ```
+1. Run `make`
+1. Configure the [git repository](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap) with a [deploy key](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap/settings/keys), pasting in the contents of `install/argo_ed25519.pub`.
 
 What it does (updated as we add things)
 ---
@@ -34,3 +48,4 @@ What it does (updated as we add things)
 1. Generates an SSH key for use with this cluster
 1. Templates the install-config.yaml file with your pull secret and the generated SSH key
 1. Installs OpenShift on AWS using IPI
+1. Bootstrap that OpenShift cluster by installing OpenShift GitOps and wiring it with an app-of-apps that watches the `applications/` directory of this repository, applying all ArgoCD `Applications` to the cluster.
