@@ -6,6 +6,7 @@ resources:
   - subscription.yaml
   - namespace.yaml
   - age-secret.yaml
+  - rbac.yaml
   - argocd.yaml
   - ssh-keys.yaml
   - app-of-apps.yaml
