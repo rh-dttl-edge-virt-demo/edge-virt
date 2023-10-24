@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+metadata:
+  creationTimestamp: null
+  name: edge-virt
+baseDomain: rh-dttl.edgelab.dev
+compute:
+  - architecture: amd64
+    hyperthreading: Enabled
+    name: worker
+    platform: {}
+    replicas: 3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  platform: {}
+  replicas: 3
+networking:
+  clusterNetwork:
+    - cidr: 10.128.0.0/14
+      hostPrefix: 23
+  machineNetwork:
+    - cidr: 10.0.0.0/16
+  networkType: OVNKubernetes
+  serviceNetwork:
+    - 172.30.0.0/16
+platform:
+  aws:
+    region: us-east-2
+publish: External
+additionalTrustBundlePolicy: Proxyonly
