@@ -1,0 +1,20 @@
+---
+letsEncrypt:
+  server: https://acme-v02.api.letsencrypt.org/directory
+  preferredChain: ""
+  email: jharmison@redhat.com
+  solvers:
+    - type: dns
+      dnsConfig:
+        route53:
+          accessKeyID: AKIARTJEFJKGTYFRRXUS
+          region: us-east-2
+          secretAccessKeySecretRef:
+            key: secret-access-key
+            name: le-route53-creds
+      dnsZones:
+        - rh-dttl.edgelab.dev
+  secrets:
+    - name: le-route53-creds
+      stringData:
+        secret-access-key: <put your actual key here>
