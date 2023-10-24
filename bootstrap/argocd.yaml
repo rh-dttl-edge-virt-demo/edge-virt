@@ -93,6 +93,8 @@ spec:
         value: "true"
       - name: HELM_SECRETS_HELM_PATH
         value: /usr/local/bin/helm
+      - name: HELM_SECRETS_IGNORE_MISSING_VALUES
+        value: "true"
     initContainers:
       - name: download-tools
         image: registry.access.redhat.com/ubi9/ubi:latest
@@ -142,6 +144,8 @@ spec:
             value: "true"
           - name: HELM_SECRETS_HELM_PATH
             value: /usr/local/bin/helm
+          - name: HELM_SECRETS_IGNORE_MISSING_VALUES
+            value: "true"
         volumeMounts:
           - mountPath: /var/run/argocd
             name: var-files
