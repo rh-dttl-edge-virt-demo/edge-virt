@@ -15,7 +15,7 @@ Usage
 
 1. Create an RHDP Open Environment with a suitable timeout
 1. Edit install-config.yaml, changing the base domain to the top-level Route53 domain for your environment (or bring your own domain, configuration not described here).
-  - **Note**: You can edit other things in the file as well, changing the instance count or specifying the instance type of the cluster or selecting an alternative region for example.
+    - **Note**: You can edit other things in the file as well, changing the instance count or specifying the instance type of the cluster or selecting an alternative region for example.
 1. Grab your Pull Secret from the [Red Hat Console](https://console.redhat.com/openshift/install/platform-agnostic/user-provisioned) and export the variable in your terminal:
     ```shell
     export PULL_SECRET='<paste here>'
