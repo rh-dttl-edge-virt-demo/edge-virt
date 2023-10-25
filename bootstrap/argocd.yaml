@@ -5,6 +5,7 @@ metadata:
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
+  resourceTrackingMethod: annotation
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
