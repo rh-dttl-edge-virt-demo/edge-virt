@@ -8,6 +8,7 @@ letsEncrypt:
       dnsConfig:
         route53:
           accessKeyID: AKIARTJEFJKGTYFRRXUS
+          hostedZoneID: Z10454832HUJ1RSPPQUBQ
           region: us-east-2
           secretAccessKeySecretRef:
             key: secret-access-key
