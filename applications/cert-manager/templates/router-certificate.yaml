@@ -1,0 +1,28 @@
+{{- if .Values.certificates.router.managed -}}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: router-default
+  namespace: openshift-ingress
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  dnsNames:
+    {{- toYaml .Values.certificates.api.dnsNames | nindent 4 }}
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: router-cert
+---
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: default
+  namespace: openshift-ingress-operator
+spec:
+  defaultCertificate:
+    name: router-cert
+{{- end }}

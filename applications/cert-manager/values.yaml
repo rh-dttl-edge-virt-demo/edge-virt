@@ -18,3 +18,14 @@ letsEncrypt:
     - name: le-route53-creds
       stringData:
         secret-access-key: <put your actual key here>
+
+certificates:
+  api:
+    managed: true
+    dnsNames:
+    - api.edge-virt.rh-dttl.edgelab.dev
+  router:
+    managed: true
+    dnsNames:
+    - apps.edge-virt.rh-dttl.edgelab.dev
+    - *.apps.edge-virt.rh-dttl.edgelab.dev
