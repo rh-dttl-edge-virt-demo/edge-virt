@@ -112,7 +112,7 @@ spec:
             mkdir -p /custom-tools/helm-plugins
             curl -Lo - https://github.com/jkroepke/helm-secrets/releases/download/v${HELM_SECRETS_VERSION}/helm-secrets.tar.gz | tar -C /custom-tools/helm-plugins -xzf- ;
             curl -Lo /custom-tools/curl https://github.com/moparisthebest/static-curl/releases/latest/download/curl-amd64
-            curl -Lo /custom-tools/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux
+            curl -Lo /custom-tools/sops https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64
             curl -Lo /custom-tools/kubectl https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
             cp /custom-tools/helm-plugins/helm-secrets/scripts/wrapper/helm.sh /custom-tools/helm
             chmod +x /custom-tools/*
