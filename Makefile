@@ -51,3 +51,12 @@ bootstrap: bin/oc bootstrap/age-secret.yaml bootstrap/ssh-keys.yaml install/auth
 		sleep $$step; \
 		echo -n .; \
 		(( duration += step )); done; echo
+
+.PHONY: destroy
+destroy:
+	@if !( ([ -n "$$AWS_ACCESS_KEY_ID" ] || grep -q '^export AWS_ACCESS_KEY_ID=' .env 2>/dev/null) && ([ -n "$$AWS_SECRET_ACCESS_KEY" ] || grep -q '^export AWS_SECRET_ACCESS_KEY=' .env 2>/dev/null)); then \
+		echo "Please export AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be able to create a cluster on AWS" >&2;\
+		exit 1;\
+	fi
+	if [ -f .env ]; then source ./.env; fi && \
+		bin/openshift-install --dir ./install destroy cluster
