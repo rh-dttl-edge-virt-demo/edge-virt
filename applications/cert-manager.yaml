@@ -21,7 +21,7 @@ spec:
         - secrets+age-import:///helm-secrets-private-keys/argo.txt?secrets.enc.yaml
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
     syncOptions:
       - RespectIgnoreDifferences=true
