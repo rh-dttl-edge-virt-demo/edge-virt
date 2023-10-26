@@ -3,3 +3,11 @@ github:
   # https://docs.openshift.com/container-platform/4.13/authentication/identity_providers/configuring-github-identity-provider.html#identity-provider-registering-github_configuring-github-identity-provider
   clientId: <your client ID goes here>
   clientSecret: <your client secret goes here>
+
+admins:
+- jharmison-redhat
+- kellyhair
+- lindseyvolk
+- Venus-Izadi
+  # - DoShackathon # PLEASE ADD 2FA
+  # - jhuntress15 # PLEASE ADD 2FA
