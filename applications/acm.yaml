@@ -13,7 +13,7 @@ spec:
     namespace: open-cluster-management
   project: default
   source:
-    path: applications/cert-manager
+    path: applications/acm
     repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
     targetRevision: HEAD
   syncPolicy:
