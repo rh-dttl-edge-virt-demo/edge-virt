@@ -4,6 +4,7 @@ github:
   clientId: <your client ID goes here>
   clientSecret: <your client secret goes here>
 
+removeKubeAdmin: true
 admins:
 - jharmison-redhat
 - kellyhair
