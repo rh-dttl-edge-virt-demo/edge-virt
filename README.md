@@ -40,6 +40,7 @@ Usage
     ```
 1. Run `make`
 1. Configure the [git repository](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap) with a [deploy key](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap/settings/keys), pasting in the contents of `install/argo_ed25519.pub`.
+1. Wire up the appropriate secrets for on-cluster activities like the equivalent key in `secrets.yaml` for the [secret access key](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap/blob/main/applications/cert-manager/values.yaml#L21) that cert-manager needs to answer DNS challenges. There are other things in the applications, those are out of scope for the readme.
 
 What it does (updated as we add things)
 ---
@@ -49,3 +50,6 @@ What it does (updated as we add things)
 1. Templates the install-config.yaml file with your pull secret and the generated SSH key
 1. Installs OpenShift on AWS using IPI
 1. Bootstrap that OpenShift cluster by installing OpenShift GitOps and wiring it with an app-of-apps that watches the `applications/` directory of this repository, applying all ArgoCD `Applications` to the cluster.
+    1. `cert-manager` for trusted TLS certificates for the cluster from LetsEncrypt
+    1. OAuth configuration for a GitHub organization, and definition of cluster-admins
+    1. ACM and a default MultiClusterHub resource
