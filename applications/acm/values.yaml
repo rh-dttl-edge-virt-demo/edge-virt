@@ -1,2 +1,7 @@
 ---
 channel: release-2.8
+agentServiceConfig:
+  databaseStorage: 10Gi
+  filesystemStorage: 100Gi
+  imageStorage: 50Gi
+nlbDomain: nlb-apps.edge-virt.rh-dttl.edgelab.dev
