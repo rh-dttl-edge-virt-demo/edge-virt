@@ -1,5 +1,5 @@
 ---
-channel: release-2.8
+channel: release-2.9
 agentServiceConfig:
   databaseStorage: 10Gi
   filesystemStorage: 100Gi
