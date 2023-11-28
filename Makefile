@@ -50,6 +50,7 @@ bootstrap: bin/oc bootstrap/age-secret.yaml bootstrap/ssh-keys.yaml install/auth
 		sleep $$step; \
 		echo -n .; \
 		(( duration += step )); done; echo
+	@sed -i '/certificate-authority-data/d' install/auth/kubeconfig
 
 .PHONY: destroy
 destroy:
