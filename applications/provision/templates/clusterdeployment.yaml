@@ -18,3 +18,5 @@ spec:
       agentSelector:
         matchLabels:
           infraenvs.agent-install.openshift.io: {{ .Values.cluster.env }}
+  pullSecretRef:
+    name: pullsecret
