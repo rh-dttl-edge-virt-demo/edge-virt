@@ -4,7 +4,11 @@ kind: AgentClusterInstall
 metadata:
   name: {{ .Values.cluster.name }}
 spec:
-  platformType: None
+  platformType: {{ .Values.cluster.platformType }}
+  {{- with .Values.cluster.platform }}
+  platform:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   clusterDeploymentRef:
     name: {{ .Values.cluster.name }}
   imageSetRef:

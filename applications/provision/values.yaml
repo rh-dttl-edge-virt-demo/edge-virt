@@ -9,6 +9,8 @@ cluster:
   version: 4.14.3
   arch: x86-64
   controlPlaneNodes: 3
+  platformType: None
+  platform: null
   networking:
     machineNetwork:
       - cidr: 192.168.111.0/24
