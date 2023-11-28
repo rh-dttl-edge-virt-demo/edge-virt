@@ -1,0 +1,26 @@
+{{- range $env := .Values.environments }}
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: {{ $env.name }}
+  namespace: {{ $env.name }}
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
+    networkType: static
+spec:
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
+  cpuArchitecture: x86_64
+  ipxeScriptType: DiscoveryImageAlways
+  pullSecretRef:
+    name: pullsecret
+  sshAuthorizedKey: {{ $.Values.sshKey }}
+  nmStateConfigLabelSelector:
+      matchLabels:
+        infraenvs.agent-install.openshift.io: {{ $env.name }}
+status:
+  agentLabelSelector:
+    matchLabels:
+      agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
+{{- end -}}

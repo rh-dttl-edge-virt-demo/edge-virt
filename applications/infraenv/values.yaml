@@ -1,0 +1,6 @@
+---
+pullSecret: <your actual pull secret>
+sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUA3+ISvfOCImEYDcBRO6ee9qHPV4QSONyLlnbX05t7 admin@edge-virt.rh-dttl.edgelab.dev
+environments:
+  - name: harmison-house
+    location: Georgia
