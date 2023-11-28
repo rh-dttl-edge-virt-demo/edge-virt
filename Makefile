@@ -37,7 +37,9 @@ install/auth/kubeconfig: bin/openshift-install install/id_ed25519
 		bin/openshift-install --dir ./install create cluster
 
 install/auth/kubeconfig-orig: install/auth/kubeconfig
-	cp install/auth/kubeconfig install/auth/kubeconfig-orig
+	@if [ -e install/auth/kubeconfig-orig ]; then \
+		touch install/auth/kubeconfig-orig; else \
+		cp install/auth/kubeconfig install/auth/kubeconfig-orig; fi
 
 bootstrap/ssh-keys.yaml: install/argo_ed25519
 	hack/gen-ssh-keys.sh
