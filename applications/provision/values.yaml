@@ -1,0 +1,19 @@
+---
+pullSecret: <your actual pull secret>
+sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILs/x4WV17NFyXVxHqafnzmFPvHXgnKCP7inmtJTcTJF admin@edge-virt.rh-dttl.edgelab.dev
+
+cluster:
+  name: example-cluster
+  baseDomain: rh-dttl.edgelab.dev
+  env: harmison-house
+  version: 4.14.3
+  arch: x86-64
+  controlPlaneNodes: 3
+  networking:
+    machineNetwork:
+      - cidr: 192.168.111.0/24
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    serviceNetwork:
+      - 172.30.0.0/16

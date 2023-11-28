@@ -1,0 +1,45 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-provisioning
+spec:
+  generators:
+    - git:
+        repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+        revision: HEAD
+        files:
+          - path: "clusters/**/provision.yaml"
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  template:
+    metadata:
+      name: "provision-{{ cluster.name }}"
+    spec:
+      destination:
+        name: in-cluster
+        namespace: "{{ cluster.name }}"
+      project: default
+      source:
+        path: applications/provision
+        repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+        targetRevision: HEAD
+        helm:
+          valueFiles:
+            - "/clusters/{{ cluster.name }}/provision.yaml"
+            - secrets+age-import:///helm-secrets-private-keys/argo.txt?secrets.enc.yaml
+      ignoreDifferences:
+        - group: cluster.open-cluster-management.io
+          kind: ManagedCluster
+          jsonPointers:
+          - /metadata/labels
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+        syncOptions:
+          - RespectIgnoreDifferences=true
+          - CreateNamespace=true
+        managedNamespaceMetadata:
+          labels:
+            argocd.argoproj.io/managed-by: openshift-gitops
