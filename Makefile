@@ -62,4 +62,4 @@ destroy:
 
 .PHONY: clean
 clean: destroy
-	rm -rf install bootstrap/ssh-keys.yaml
+	rm -rf install/auth install/*.log install/*.iso bin
