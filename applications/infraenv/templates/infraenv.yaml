@@ -9,8 +9,6 @@ metadata:
     agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
     networkType: static
 spec:
-  agentLabels:
-    agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
   cpuArchitecture: x86_64
   ipxeScriptType: DiscoveryImageAlways
   pullSecretRef:
