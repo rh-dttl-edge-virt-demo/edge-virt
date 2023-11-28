@@ -13,6 +13,6 @@ type: Opaque
 data:
   type: Z2l0
   url: Z2l0QGdpdGh1Yi5jb206cmgtZHR0bC1lZGdlLXZpcnQtZGVtby9odWItYm9vdHN0cmFwLmdpdA==
-  sshPrivateKey: $(cat install/argo_ed25519 | base64 -w0)
+  sshPrivateKey: $(base64 -w0 install/argo_ed25519)
   enableLfs: dHJ1ZQ==
 EOF
