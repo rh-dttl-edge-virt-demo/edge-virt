@@ -1,28 +1,27 @@
 CLUSTER_NAME := $(shell hack/yq .metadata.name install-config.yaml)
 BASE_DOMAIN := $(shell hack/yq .baseDomain install-config.yaml)
+CLUSTER_VERSION := 4.14
 
 .PHONY: all
 all: bootstrap
 
 bin/openshift-install:
 	mkdir -p bin
-	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.13/openshift-install-linux.tar.gz | tar xvzf - -C ./bin
+	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-$(CLUSTER_VERSION)/openshift-install-linux.tar.gz | tar xvzf - -C ./bin
 
 bin/oc:
 	mkdir -p bin
-	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.13/openshift-client-linux.tar.gz | tar xvzf - -C ./bin
+	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-$(CLUSTER_VERSION)/openshift-client-linux.tar.gz | tar xvzf - -C ./bin
 
 install/id_ed25519: install-config.yaml
 	mkdir -p install
-	rm -f install/id_ed25519{,.pub}
-	ssh-keygen -t ed25519 -b 512 -f install/id_ed25519 -C admin@$(CLUSTER_NAME).$(BASE_DOMAIN) -N ''
+	if [ ! -e install/id_ed25519 ]; then ssh-keygen -t ed25519 -b 512 -f install/id_ed25519 -C admin@$(CLUSTER_NAME).$(BASE_DOMAIN) -N ''; fi
 
 install/argo_ed25519: install-config.yaml
 	mkdir -p install
-	rm -f install/argo_ed25519{,.pub}
-	ssh-keygen -t ed25519 -b 512 -f install/argo_ed25519 -C argocd@$(CLUSTER_NAME).$(BASE_DOMAIN) -N ''
+	if [ ! -e install/argo_ed25519 ]; then ssh-keygen -t ed25519 -b 512 -f install/argo_ed25519 -C argocd@$(CLUSTER_NAME).$(BASE_DOMAIN) -N ''; fi
 
-install/auth/kubeconfig: bin/openshift-install install-config.yaml install/id_ed25519
+install/auth/kubeconfig: bin/openshift-install install/id_ed25519
 	@if ! ([ -n "$$PULL_SECRET" ] || grep -q '^export PULL_SECRET=' .env 2>/dev/null); then \
 		echo "Please export the PULL_SECRET variable with your cluster pull secret from https://console.redhat.com/openshift/install/platform-agnostic/user-provisioned" >&2;\
 		exit 1;\
@@ -59,4 +58,8 @@ destroy:
 		exit 1;\
 	fi
 	if [ -f .env ]; then source ./.env; fi && \
-		bin/openshift-install --dir ./install destroy cluster
+		if [ -e install/auth/kubeconfig ]; then bin/openshift-install --dir ./install destroy cluster; fi
+
+.PHONY: clean
+clean: destroy
+	rm -rf install bootstrap/ssh-keys.yaml
