@@ -19,8 +19,4 @@ spec:
   nmStateConfigLabelSelector:
       matchLabels:
         infraenvs.agent-install.openshift.io: {{ $env.name }}
-status:
-  agentLabelSelector:
-    matchLabels:
-      agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
 {{- end -}}
