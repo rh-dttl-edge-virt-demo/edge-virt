@@ -82,11 +82,11 @@ spec:
       - name: HELM_SECRETS_BACKEND
         value: sops
       - name: HELM_SECRETS_VALUES_ALLOW_SYMLINKS
-        value: "false"
+        value: "true"
       - name: HELM_SECRETS_VALUES_ALLOW_ABSOLUTE_PATH
         value: "true"
       - name: HELM_SECRETS_VALUES_ALLOW_PATH_TRAVERSAL
-        value: "false"
+        value: "true"
       - name: HELM_SECRETS_WRAPPER_ENABLED
         value: "true"
       - name: HELM_SECRETS_HELM_PATH
