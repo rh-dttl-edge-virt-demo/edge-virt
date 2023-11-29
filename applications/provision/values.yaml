@@ -23,3 +23,5 @@ cluster:
     networkType: OVNKubernetes
   apiVIPs: []
   ingressVIPs: []
+
+nodes: []
