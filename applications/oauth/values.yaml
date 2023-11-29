@@ -6,11 +6,10 @@ github:
 
 removeKubeAdmin: true
 admins:
-- jharmison-redhat
-- kellyhair
-- lindseyvolk
-- Venus-Izadi
-- DoShackathon # KH add; 2FA enabled
-- jhuntress15 # KH add; 2FA enabled
-- Freqx # KH add; 2FA enabled
-
+  - jharmison-redhat
+  - kellyhair
+  - lindseyvolk
+  - Venus-Izadi
+  - DoShackathon
+  - jhuntress15
+  - Freqx

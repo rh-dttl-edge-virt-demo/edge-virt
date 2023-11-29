@@ -6,6 +6,10 @@ install/*
 # Never commit unencrypted secrets
 applications/*/secrets.yml
 applications/*/secrets.yaml
+clusters/*/secrets.yml
+clusters/*/secrets.yaml
+clusters/*/*/secrets.yml
+clusters/*/*/secrets.yaml
 
 # Helm stuff should not be committed
 Chart.lock

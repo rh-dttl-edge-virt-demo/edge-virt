@@ -58,7 +58,8 @@ function needs_update {
 	return 1
 }
 
-while read -rd $'\0' pt; do
+function encrypt {
+	pt="$1"
 	# Build out the ciphertext name
 	dir="$(dirname "$pt")"
 	fn="$(basename "$pt")"
@@ -68,9 +69,18 @@ while read -rd $'\0' pt; do
 
 	# If no update is necessary just continue to the next file
 	if ! content=$(needs_update "$pt" "$ct"); then
-		continue
+		return
 	fi
 	echo "Updating $ct" >&2
 	echo "$content" >"$ct"
 	git add "$ct"
+}
+
+# application secrets
+while read -rd $'\0' pt; do
+	encrypt "$pt"
 done < <(find applications -maxdepth 2 -type f \( -name secrets.yaml -o -name secrets.yml \) -print0)
+# cluster secrets
+while read -rd $'\0' pt; do
+	encrypt "$pt"
+done < <(find clusters -maxdepth 3 -type f \( -name secrets.yaml -o -name secrets.yml \) -print0)

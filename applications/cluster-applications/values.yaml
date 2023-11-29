@@ -1,0 +1,9 @@
+---
+argoAgeKey: |
+  Put an actual AGE private key here so that argo can decrypt secrets
+sshPrivateKey: |
+  Put an SSH private key configured as a deploy key for your repo here
+
+cluster:
+  name: example-cluster
+  baseDomain: rh-dttl.edgelab.dev

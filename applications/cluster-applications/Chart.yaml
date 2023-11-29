@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+name: cluster-applications
+description: >
+  A helm chart to enable dynamically defining ArgoCD applications for managed
+  ACM-managed clusters via ManifestWork resources, including installing ArgoCD.
+type: application
+version: 0.1.0
+appVersion: 0.1.0
