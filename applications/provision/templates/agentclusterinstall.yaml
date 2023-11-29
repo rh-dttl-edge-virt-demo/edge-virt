@@ -12,7 +12,7 @@ spec:
   clusterDeploymentRef:
     name: {{ .Values.cluster.name }}
   imageSetRef:
-    name: img{{ .Values.cluster.version }}-{{ .Values.cluster.arch }}-appsub
+    name: img{{ .Values.cluster.version }}-multi-appsub
   networking:
     {{- toYaml .Values.cluster.networking | nindent 4 }}
   provisionRequirements:

@@ -7,7 +7,6 @@ cluster:
   baseDomain: rh-dttl.edgelab.dev
   env: harmison-house
   version: 4.14.3
-  arch: x86-64
   controlPlaneNodes: 3
   workerNodes: 3
   platformType: None
