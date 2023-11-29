@@ -20,7 +20,7 @@ while ((${#hosts[@]} != ${#patched_agents[@]})); do
 			# And use it as a merge patch
 			oc patch agent "$agent" --type=merge -p "$config"
 			# Also patch the agent for the cluster
-			oc patch agent "$agent" --type=merge -p '{"spec":{"clusterDeploymentName":{"name":"'"$cluster_name"'","namespace":"'"$cluster_name"'"}}}'
+			oc patch agent "$agent" --type=merge -p '{"metadata":{"labels":{"agent-install.openshift.io/clusterdeployment-namespace":"'"$cluster_name"'"}},"spec":{"clusterDeploymentName":{"name":"'"$cluster_name"'","namespace":"'"$cluster_name"'"}}}'
 			# Tracking patched agents as we go
 			patched_agents+=("$host")
 		fi
