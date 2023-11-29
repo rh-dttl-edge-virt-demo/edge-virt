@@ -26,8 +26,8 @@ spec:
         targetRevision: HEAD
         helm:
           valueFiles:
-            - "../../clusters/{{ cluster.name }}/provision.yaml"
-            - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ cluster.name }}/secrets.enc.yaml
+            - "/clusters/{{ cluster.name }}/provision.yaml"
+            - secrets+age-import:///helm-secrets-private-keys/argo.txt?https://raw.githubusercontent.com/rh-dttl-edge-virt-demo/hub-bootstrap/main/clusters/{{ cluster.name }}/secrets.enc.yaml
       syncPolicy:
         automated:
           prune: true
