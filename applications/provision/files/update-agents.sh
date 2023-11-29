@@ -18,7 +18,7 @@ while ((${#hosts[@]} != ${#patched_agents[@]})); do
 			# Pull the json blob from the configmap
 			config="$(oc get configmap -n "$cluster_name" node-configs -ogo-template='{{ index .data "'"$host"'" }}')"
 			# And use it as a merge patch
-			oc patch agent "$agent" -p "$config"
+			oc patch agent "$agent" --type=merge -p "$config"
 			# Tracking patched agents as we go
 			patched_agents+=("$host")
 		fi
