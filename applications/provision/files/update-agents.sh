@@ -19,6 +19,8 @@ while ((${#hosts[@]} != ${#patched_agents[@]})); do
 			config="$(oc get configmap -n "$cluster_name" node-configs -ogo-template='{{ index .data "'"$host"'" }}')"
 			# And use it as a merge patch
 			oc patch agent "$agent" --type=merge -p "$config"
+			# Also patch the agent for the cluster
+			oc patch agent "$agent" --type=merge -p '{"spec":{"clusterDeploymentName":{"name":"'"$cluster_name"'","namespace":"'"$cluster_name"'"}}}'
 			# Tracking patched agents as we go
 			patched_agents+=("$host")
 		fi

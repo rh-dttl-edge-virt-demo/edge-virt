@@ -2,10 +2,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: update-manifests-
+  name: update-manifests
   annotations:
-    argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   backoffLimit: 4
   template:
