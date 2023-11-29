@@ -10,7 +10,7 @@ patched_agents=()
 # Until we've patched all hosts
 while ((${#hosts[@]} != ${#patched_agents[@]})); do
 	# Iterate through the hosts
-	for host in "${hosts[@]}"; do
+	for host in ${hosts[*]}; do
 		# Identify if an agent has been created
 		agent="$(oc get agent -ogo-template='{{ range .items }}{{ if eq .status.inventory.hostname "'"$host"'" }}{{ .metadata.name }}{{ end }}{{ end }}')"
 		# If an agent has been created and we haven't already patched it
