@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-applications
+  name: cluster-certificates
   annotations:
     argocd.argoproj.io/sync-wave: "5"
 spec:
@@ -16,20 +16,19 @@ spec:
     preserveResourcesOnDeletion: true
   template:
     metadata:
-      name: "{{ cluster.name }}-applications"
+      name: "{{ cluster.name }}-certificates"
     spec:
       destination:
         name: in-cluster
         namespace: "{{ cluster.name }}"
       project: default
       source:
-        path: applications/cluster-applications
+        path: applications/cluster-certificates
         repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
         targetRevision: HEAD
         helm:
           valueFiles:
             - "/clusters/{{ cluster.name }}/provision.yaml"
-            - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ cluster.name }}/secrets.enc.yaml
       syncPolicy:
         automated:
           prune: true

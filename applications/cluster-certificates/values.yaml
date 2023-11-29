@@ -1,0 +1,4 @@
+---
+cluster:
+  name: example-cluster
+  baseDomain: rh-dttl.edgelab.dev

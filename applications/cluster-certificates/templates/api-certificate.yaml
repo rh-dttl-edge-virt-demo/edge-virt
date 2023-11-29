@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openshift-api
+spec:
+  dnsNames:
+    - api.{{ .Values.cluster.name }}.{{ .Values.cluster.baseDomain }}
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: openshift-api
