@@ -20,7 +20,7 @@ subjects:
 - kind: ServiceAccount
   name: update-manifests
   namespace: {{ .Release.Namespace }}
-{{- if .Values.nodes -}}
+{{- if .Values.nodes }}
 ---
 apiVersion: v1
 kind: ServiceAccount
