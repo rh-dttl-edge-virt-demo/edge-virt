@@ -9,6 +9,7 @@ spec:
   platform:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  holdInstallation: false
   clusterDeploymentRef:
     name: {{ .Values.cluster.name }}
   imageSetRef:
@@ -17,4 +18,16 @@ spec:
     {{- toYaml .Values.cluster.networking | nindent 4 }}
   provisionRequirements:
     controlPlaneAgents: {{ .Values.cluster.controlPlaneNodes }}
+    {{- with .Values.cluster.workerNodes }}
+    workerAgents: {{ . }}
+    {{- end }}
   sshPublicKey: {{ .Values.sshKey }}
+  mastersSchedulable: {{ if lt (int .Values.cluster.workerNodes) 2 }}true{{ else }}false{{ end }}
+  {{- with .Values.cluster.apiVIPs }}
+  apiVIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.cluster.ingressVIPs }}
+  ingressVIPs:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}

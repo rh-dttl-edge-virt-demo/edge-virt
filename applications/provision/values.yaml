@@ -9,6 +9,7 @@ cluster:
   version: 4.14.3
   arch: x86-64
   controlPlaneNodes: 3
+  workerNodes: 3
   platformType: None
   platform: null
   networking:
@@ -20,3 +21,5 @@ cluster:
     serviceNetwork:
       - 172.30.0.0/16
     networkType: OVNKubernetes
+  apiVIPs: []
+  ingressVIPs: []

@@ -2,6 +2,7 @@
 cluster:
   name: small-post-1
   controlPlaneNodes: 1
+  workerNodes: 0
   networking:
     machineNetwork:
       - cidr: 10.1.1.0/24
