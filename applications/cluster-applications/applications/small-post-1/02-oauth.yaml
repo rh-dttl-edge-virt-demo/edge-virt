@@ -17,7 +17,7 @@ spec:
     helm:
       valueFiles:
         - /clusters/{{ $.Values.cluster.name }}/oauth/values.yaml
-        - secrets+age-import:///helm-secrets-private-keys/argo.txt?https://raw.githubusercontent.com/rh-dttl-edge-virt-demo/hub-bootstrap/main/clusters/{{ $.Values.cluster.name }}/oauth/secrets.enc.yaml
+        - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ $.Values.cluster.name }}/oauth/secrets.enc.yaml
   syncPolicy:
     automated:
       prune: true
