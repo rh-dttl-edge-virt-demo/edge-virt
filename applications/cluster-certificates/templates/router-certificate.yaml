@@ -6,7 +6,7 @@ metadata:
 spec:
   dnsNames:
     - apps.{{ .Values.cluster.name }}.{{ .Values.cluster.baseDomain }}
-    - "*apps.{{ .Values.cluster.name }}.{{ .Values.cluster.baseDomain }}"
+    - "*.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.baseDomain }}"
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
