@@ -54,6 +54,10 @@ bootstrap: bin/oc bootstrap/age-secret.yaml bootstrap/ssh-keys.yaml install/auth
 		(( duration += step )); done; echo
 	@sed -i '/certificate-authority-data/d' install/auth/kubeconfig
 
+.PHONY: isos
+isos: install/auth/kubeconfig-orig
+	hack/get-isos.sh
+
 .PHONY: destroy
 destroy:
 	@if !( ([ -n "$$AWS_ACCESS_KEY_ID" ] || grep -q '^export AWS_ACCESS_KEY_ID=' .env 2>/dev/null) && ([ -n "$$AWS_SECRET_ACCESS_KEY" ] || grep -q '^export AWS_SECRET_ACCESS_KEY=' .env 2>/dev/null)); then \

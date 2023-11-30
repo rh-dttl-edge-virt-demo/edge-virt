@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$(realpath "$0")")" || exit 1
+cd "$(dirname "$(realpath "$0")")/.." || exit 1
 export KUBECONFIG="${PWD}/install/auth/kubeconfig"
 
 is_iso() {
