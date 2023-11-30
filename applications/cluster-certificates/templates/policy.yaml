@@ -88,13 +88,25 @@ spec:
                   tls.key: >-
                     {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.key") | protect hub{{ "}}" }}
 ---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: {{ .Values.cluster.name }}
+  namespace: {{ .Values.cluster.env }}
+spec:
+  predicates:
+    - requiredClusterSelector:
+        labelSelector:
+          matchLabels:
+            name: {{ .Values.cluster.name }}
+---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: {{ .Values.cluster.name }}-certificates-managed
   namespace: {{ .Values.cluster.env }}
 placementRef:
-  name: {{ .Values.cluster.env }}
+  name: {{ .Values.cluster.name }}
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
 subjects:

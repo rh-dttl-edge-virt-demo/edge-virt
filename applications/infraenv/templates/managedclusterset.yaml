@@ -6,7 +6,10 @@ metadata:
   name: {{ $env.name }}
 spec:
   clusterSelector:
-    selectorType: ExclusiveClusterSetLabel
+    selectorType: LabelSelector
+    labelSelector:
+      matchLabels:
+        env: {{ $env.name }}
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
