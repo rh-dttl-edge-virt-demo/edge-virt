@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: registry-local-storage
+  namespace: openshift-gitops
+spec:
+  destination:
+    name: in-cluster
+    namespace: openshift-image-registry
+  project: default
+  source:
+    path: applications/registry-local-storage
+    repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
