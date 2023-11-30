@@ -1,0 +1,4 @@
+---
+deviceSelector:
+  paths:
+  - /dev/disk/by-path/pci-0000:05:00.1-ata-1
