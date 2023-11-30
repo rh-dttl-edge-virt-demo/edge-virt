@@ -29,19 +29,6 @@ spec:
                 apiVersion: v1
                 kind: Secret
                 metadata:
-                  name: openshift-api
-                  namespace: openshift-config
-                type: kubernetes.io/tls
-                data:
-                  tls.crt: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.crt") | protect hub{{ "}}" }}
-                  tls.key: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.key") | protect hub{{ "}}" }}
-            - complianceType: musthave
-              objectDefinition:
-                apiVersion: v1
-                kind: Secret
-                metadata:
                   name: router-cert
                   namespace: openshift-ingress
                 type: kubernetes.io/tls
@@ -50,6 +37,29 @@ spec:
                     {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "router-cert").data "tls.crt") | protect hub{{ "}}" }}
                   tls.key: >-
                     {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "router-cert").data "tls.key") | protect hub{{ "}}" }}
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operator.openshift.io/v1
+                kind: IngressController
+                metadata:
+                  name: default
+                  namespace: openshift-ingress-operator
+                spec:
+                  defaultCertificate:
+                    name: router-cert
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: api-certificate
+        spec:
+          remediationAction: enforce
+          namespaceSelector:
+            exclude:
+              - kube-*
+            include:
+              - default
+          object-templates:
             - complianceType: musthave
               objectDefinition:
                 apiVersion: config.openshift.io/v1
@@ -65,14 +75,17 @@ spec:
                           name: openshift-api
             - complianceType: musthave
               objectDefinition:
-                apiVersion: operator.openshift.io/v1
-                kind: IngressController
+                apiVersion: v1
+                kind: Secret
                 metadata:
-                  name: default
-                  namespace: openshift-ingress-operator
-                spec:
-                  defaultCertificate:
-                    name: router-cert
+                  name: openshift-api
+                  namespace: openshift-config
+                type: kubernetes.io/tls
+                data:
+                  tls.crt: >-
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.crt") | protect hub{{ "}}" }}
+                  tls.key: >-
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.key") | protect hub{{ "}}" }}
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
