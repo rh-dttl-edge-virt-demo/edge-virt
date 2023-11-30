@@ -4,6 +4,7 @@ kind: ManagedCluster
 metadata:
   name: {{ .Values.cluster.name }}
   labels:
+    env: {{ .Values.cluster.env }}
     cloud: auto-detect
     vendor: auto-detect
 spec:

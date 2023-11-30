@@ -2,7 +2,8 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: certificates-managed
+  name: {{ .Values.cluster.name }}-certificates-managed
+  namespace: {{ .Values.cluster.env }}
   annotations:
     policy.open-cluster-management.io/standards: NIST SP 800-53
     policy.open-cluster-management.io/categories: SC System and Communications Protection
@@ -90,12 +91,13 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: certificates-managed
+  name: {{ .Values.cluster.name }}-certificates-managed
+  namespace: {{ .Values.cluster.env }}
 placementRef:
-  name: cluster
+  name: {{ .Values.cluster.env }}
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
 subjects:
-  - name: certificates-managed
+  - name: {{ .Values.cluster.name }}-certificates-managed
     apiGroup: policy.open-cluster-management.io
     kind: Policy
