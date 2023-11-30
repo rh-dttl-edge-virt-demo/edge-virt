@@ -3,7 +3,6 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: {{ .Values.cluster.name }}-certificates-managed
-  namespace: {{ .Values.cluster.env }}
   annotations:
     policy.open-cluster-management.io/standards: NIST SP 800-53
     policy.open-cluster-management.io/categories: SC System and Communications Protection
@@ -35,9 +34,9 @@ spec:
                 type: kubernetes.io/tls
                 data:
                   tls.crt: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "router-cert").data "tls.crt") | protect hub{{ "}}" }}
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.env }}" "{{ .Values.cluster.name }}-router-cert").data "tls.crt") | protect hub{{ "}}" }}
                   tls.key: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "router-cert").data "tls.key") | protect hub{{ "}}" }}
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.env }}" "{{ .Values.cluster.name }}-router-cert").data "tls.key") | protect hub{{ "}}" }}
             - complianceType: musthave
               objectDefinition:
                 apiVersion: operator.openshift.io/v1
@@ -84,15 +83,14 @@ spec:
                 type: kubernetes.io/tls
                 data:
                   tls.crt: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.crt") | protect hub{{ "}}" }}
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.env }}" "{{ .Values.cluster.name }}-api-cert").data "tls.crt") | protect hub{{ "}}" }}
                   tls.key: >-
-                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.name }}" "openshift-api").data "tls.key") | protect hub{{ "}}" }}
+                    {{ "{{" }}hub (index (lookup "v1" "Secret" "{{ .Values.cluster.env }}" "{{ .Values.cluster.name }}-api-cert").data "tls.key") | protect hub{{ "}}" }}
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: {{ .Values.cluster.name }}
-  namespace: {{ .Values.cluster.env }}
 spec:
   predicates:
     - requiredClusterSelector:
@@ -104,7 +102,6 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: {{ .Values.cluster.name }}-certificates-managed
-  namespace: {{ .Values.cluster.env }}
 placementRef:
   name: {{ .Values.cluster.name }}
   apiGroup: cluster.open-cluster-management.io

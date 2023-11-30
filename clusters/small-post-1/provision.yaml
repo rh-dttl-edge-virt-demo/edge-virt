@@ -1,6 +1,7 @@
 ---
 cluster:
   name: small-post-1
+  env: harmison-house
   controlPlaneNodes: 1
   workerNodes: 0
   networking:

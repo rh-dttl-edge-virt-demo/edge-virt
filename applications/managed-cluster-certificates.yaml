@@ -20,7 +20,7 @@ spec:
     spec:
       destination:
         name: in-cluster
-        namespace: "{{ cluster.name }}"
+        namespace: "{{ cluster.env }}"
       project: default
       source:
         path: applications/cluster-certificates
