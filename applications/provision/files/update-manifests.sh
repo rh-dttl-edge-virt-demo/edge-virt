@@ -17,7 +17,7 @@ while (($(import_secret_count) < 1)); do
 	sleep 1
 done
 
-cat <<EOF >/tmp/manifests
+cat <<EOF | oc apply -f-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -31,10 +31,8 @@ data:
       namespace: openshift-config
     data:
       import.yaml: |
-EOF
-get_manifests >>/tmp/manifests
-cat <<'EOF' >>/tmp/manifests
-  spoke-config-job.yaml:
+$(get_manifests)
+  spoke-config-job.yaml: |
     ---
     apiVersion: v1
     kind: ServiceAccount
@@ -84,8 +82,6 @@ cat <<'EOF' >>/tmp/manifests
                 name: spoke-config
                 defaultMode: 420
 EOF
-cat /tmp/manifests
-oc apply -f /tmp/manifests
 
 for aci in $(oc get agentclusterinstall -oname); do
 	if [ -n "$(oc get "$aci" -ojsonpath='{.spec.manifestsConfigMapRefs}')" ]; then
