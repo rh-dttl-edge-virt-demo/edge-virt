@@ -45,11 +45,24 @@ Usage
 What it does (updated as we add things)
 ---
 
-1. Downloads the latest OpenShift 4.13 stable installer
+1. Downloads the latest OpenShift 4.14 stable installer
 1. Generates an SSH key for use with this cluster
 1. Templates the install-config.yaml file with your pull secret and the generated SSH key
 1. Installs OpenShift on AWS using IPI
 1. Bootstrap that OpenShift cluster by installing OpenShift GitOps and wiring it with an app-of-apps that watches the `applications/` directory of this repository, applying all ArgoCD `Applications` to the cluster.
     1. `cert-manager` for trusted TLS certificates for the cluster from LetsEncrypt
     1. OAuth configuration for a GitHub organization, and definition of cluster-admins
-    1. ACM and a default MultiClusterHub resource
+    1. ACM and a default MultiClusterHub resource, including configuring the MultiClusterEngine and Assisted Service
+1. Configures InfraEnvs for Assisted Service per location
+    1. harmison-house - this is the home network of James Harmison, deliberately not exposed to the internet
+1. Configure a ManagedClusterSet for this InfraEnv and a default env-wide Placement resource for policy
+1. Uses an ApplicationSet to template out managed cluster provisioning activities
+    1. The following clusters are provisioned right now:
+        1. small-post-1, a SNO instance in harmison-house
+    1. For each of these clusters, the following is created:
+        1. All of the necessary Assisted Installer configuration to adopt the node (still requires manual approval, on purpose)
+        1. An ACM ManagedCluster resource to enable the cluster to phone home to register
+        1. The necessary configurations so that, when the cluster provisions, it phones home to the ACM hub and registers itself, installing the necessary Klusterlets
+1. Manages certificates for all managed clusters by using the cert-manager instance on the Hub to request certificates and a Policy that is bound to each individual cluster to deploy only the TLS key material and enforce its use for the API server and default wildcard OpenShift Routes.
+    1. This is deployed as a Policy, which means that the ACM hub tracks enforcement of the certificates as they relate to NIST SP 800-53, and we've marked compliance as related to SC-12 for Cryptographic Key Establishment and Management. This context being associated with the configuration makes audits easier.
+1. Begins
