@@ -10,7 +10,7 @@ get_name() {
 	get_secret -ogo-template='{{ (index .items 0).metadata.name }}'
 }
 get_manifests() {
-	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}'
+	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}' | sed 's/^/        /'
 }
 
 while (($(import_secret_count) < 1)); do
@@ -31,7 +31,7 @@ data:
       namespace: openshift-config
     data:
       import.yaml: |
-$(get_manifests | sed 's/^/        /')
+$(get_manifests)
   spoke-config-job.yaml:
     ---
     apiVersion: v1
