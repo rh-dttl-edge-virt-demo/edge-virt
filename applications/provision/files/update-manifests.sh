@@ -31,7 +31,7 @@ data:
       namespace: openshift-config
     data:
       import.yaml: |
-        $(get_manifests | sed '2,$s/^/        /')
+        $(get_manifests | sed '2,\$s/^/        /')
   spoke-config-job.yaml:
     ---
     apiVersion: v1
