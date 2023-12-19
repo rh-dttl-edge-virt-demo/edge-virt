@@ -10,7 +10,7 @@ get_name() {
 	get_secret -ogo-template='{{ (index .items 0).metadata.name }}'
 }
 get_manifests() {
-	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}'
+	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}' | sed 's/^/        /'
 }
 
 while (($(import_secret_count) < 1)); do
@@ -23,8 +23,64 @@ kind: ConfigMap
 metadata:
   name: $(get_name)
 data:
-  import.yaml: |
-$(get_manifests | sed 's/^/    /')
+  spoke-config.yaml: |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: spoke-config
+      namespace: assisted-service
+    data:
+      import.yaml: |
+$(get_manifests)
+  spoke-config-job.yaml: |
+    ---
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: spoke-config
+      namespace: assisted-service
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: spoke-config
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: cluster-admin
+    subjects:
+    - kind: ServiceAccount
+      name: spoke-config
+      namespace: assisted-service
+    ---
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: spoke-config
+      namespace: assisted-service
+    spec:
+      backoffLimit: 4
+      template:
+        spec:
+          serviceAccount: spoke-config
+          serviceAccountName: spoke-config
+          restartPolicy: Never
+          containers:
+            - name: spoke-config
+              image: image-registry.openshift-image-registry.svc:5000/openshift/tools:latest
+              imagePullPolicy: IfNotPresent
+              command: ["/bin/bash"]
+              args:
+                - -xc
+                - while ! oc apply --server-side=true -f /data/import.yaml; do sleep 5; done
+              volumeMounts:
+                - name: spoke-config
+                  mountPath: /data
+          volumes:
+            - name: spoke-config
+              configMap:
+                name: spoke-config
+                defaultMode: 420
 EOF
 
 for aci in $(oc get agentclusterinstall -oname); do
