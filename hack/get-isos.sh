@@ -12,7 +12,7 @@ isos_exist() {
 
 ret=0
 
-echo -n "Waiting for API to respond with discovery iso name"
+echo -n "Waiting for API to respond with discovery iso"
 while ! isos_exist && ((ret == 0)); do
 	echo -n '.'
 	while read -r namespace name; do
@@ -36,8 +36,9 @@ while ! isos_exist && ((ret == 0)); do
 			echo "Error downloading discovery ISO for $name, please investigate" >&2
 			((ret += 1))
 		fi
-	done < <(bin/oc get infraenv -Aogo-template='{{ range .items }}{{ .metadata.namespace }} {{ .metadata.name }}{{ "\n" }}{{ end }}')
+	done < <(bin/oc get infraenv -Aogo-template='{{ range .items }}{{ .metadata.namespace }} {{ .metadata.name }}{{ "\n" }}{{ end }}' 2>/dev/null)
 	if ! isos_exist; then sleep 5; fi
 done
 
+echo
 exit $ret
