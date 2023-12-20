@@ -16,7 +16,7 @@ acme:
         dnsZones:
           - rh-dttl.edgelab.dev
     secrets:
-      - name: acme-route53-creds
+      - name: route53-creds
         stringData:
           secret-access-key: <put your actual key here>
 
