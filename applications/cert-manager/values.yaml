@@ -3,6 +3,12 @@ acme:
   zerossl:
     server: https://acme.zerossl.com/v2/DV90
     email: jharmison@redhat.com
+    externalAccountBinding:
+      keyID: hc07gV_4sxOseabTphAMsg
+      keySecretRef:
+        name: acme-zerossl-eabsecret
+        key: secret
+      keyAlgorithm: HS256
     solvers:
       - type: dns
         dnsConfig:
@@ -12,13 +18,16 @@ acme:
             region: us-east-2
             secretAccessKeySecretRef:
               key: secret-access-key
-              name: acme-route53-creds
+              name: acme-zerossl-route53-creds
         dnsZones:
           - rh-dttl.edgelab.dev
     secrets:
       - name: route53-creds
         stringData:
           secret-access-key: <put your actual key here>
+      - name: eabsecret
+        stringData:
+          secret: <put your actual HMAC key here>
 
 certificates:
   clusterIssuer: zerossl

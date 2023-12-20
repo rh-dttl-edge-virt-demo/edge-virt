@@ -16,6 +16,10 @@ spec:
     privateKeySecretRef:
       name: acme-{{ $name }}-privatekey
     server: {{ $acme.server }}
+    {{- with $acme.externalAccountBinding }}
+    externalAccountBinding:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     solvers:
     {{- range $solver := $acme.solvers -}}
       {{- if eq $solver.type "dns" }}
