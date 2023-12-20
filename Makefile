@@ -3,7 +3,7 @@ BASE_DOMAIN := $(shell hack/yq .baseDomain install-config.yaml)
 CLUSTER_VERSION := 4.14
 
 .PHONY: all
-all: bootstrap
+all: bootstrap isos
 
 bin/openshift-install:
 	mkdir -p bin
