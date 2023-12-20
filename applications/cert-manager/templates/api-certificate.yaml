@@ -14,7 +14,7 @@ spec:
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
-    name: letsencrypt
+    name: {{ .Values.certificates.clusterIssuer }}
   secretName: openshift-api
 ---
 apiVersion: config.openshift.io/v1
