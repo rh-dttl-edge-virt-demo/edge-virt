@@ -19,6 +19,48 @@ spec:
       - InstallPlan
       - ClusterServiceVersion
       clusters: ["*"]
+  resourceHealthChecks:
+    - group: certmanager.k8s.io
+      kind: Certificate
+      check: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Ready" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for certificate"
+        return hs
+    - group: operators.coreos.com
+      kind: Subscription
+      check: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.state ~= nil then
+            hs.status = "Healthy"
+            hs.message = obj.status.state
+            return hs
+          elseif obj.status.installplan ~= nil then
+            hs.status = "Progressing"
+            hs.message = "InstallPlan: " .. obj.status.installplan.name
+            return hs
+          end
+        end
+        hs.status = "Degraded"
+        hs.message = "Not at latest version, no known InstallPlan"
+        return hs
   controller:
     processors: {}
     resources:
