@@ -24,11 +24,17 @@ metadata:
   name: $(get_name)
 data:
   spoke-config.yaml: |
+    ---
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: import-hub
+    ---
     apiVersion: v1
     kind: ConfigMap
     metadata:
       name: spoke-config
-      namespace: assisted-service
+      namespace: import-hub
     data:
       import.yaml: |
 $(get_manifests)
@@ -38,7 +44,7 @@ $(get_manifests)
     kind: ServiceAccount
     metadata:
       name: spoke-config
-      namespace: assisted-service
+      namespace: import-hub
     ---
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
@@ -51,13 +57,13 @@ $(get_manifests)
     subjects:
     - kind: ServiceAccount
       name: spoke-config
-      namespace: assisted-service
+      namespace: import-hub
     ---
     apiVersion: batch/v1
     kind: Job
     metadata:
       name: spoke-config
-      namespace: assisted-service
+      namespace: import-hub
     spec:
       backoffLimit: 4
       template:
