@@ -20,6 +20,22 @@ subjects:
 - kind: ServiceAccount
   name: update-manifests
   namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: update-manifests-api-cert
+  namespace: openshift-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: certificates.cert-manager.io-v1-view
+subjects:
+- kind: ServiceAccount
+  name: update-manifests
+  namespace: {{ .Release.Namespace }}
 {{- if .Values.nodes }}
 ---
 apiVersion: v1
