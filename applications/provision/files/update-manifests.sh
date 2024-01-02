@@ -30,23 +30,12 @@ else
 	sleep 30
 fi
 
-# TODO: Work out how to better configure the registry for non-SNO
 cat <<EOF | oc apply -f-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: $(get_name)
 data:
-  configure-registry.yaml: |
-    ---
-    apiVersion: imageregistry.operator.openshift.io/v1
-    kind: Config
-    metadata:
-      name: cluster
-    spec:
-      managementState: Managed
-      storage:
-        emptyDir: {}
   import-namespace.yaml: |
     ---
     apiVersion: v1
@@ -100,7 +89,7 @@ $(get_manifests)
           restartPolicy: Never
           containers:
             - name: spoke-config
-              image: image-registry.openshift-image-registry.svc:5000/openshift/tools:latest
+              image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:535ce24b5f1894d2a07bfa7eed7ad028ffde0659693f2a571ac4712a21cd028c
               imagePullPolicy: IfNotPresent
               command: ["/bin/bash"]
               args:
