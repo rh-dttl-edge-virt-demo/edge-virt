@@ -12,7 +12,7 @@ metadata:
 type: Opaque
 data:
   type: Z2l0
-  url: Z2l0QGdpdGh1Yi5jb206cmgtZHR0bC1lZGdlLXZpcnQtZGVtby9odWItYm9vdHN0cmFwLmdpdA==
+  url: Z2l0QGdpdGh1Yi5jb206cmgtZHR0bC1lZGdlLXZpcnQtZGVtby9lZGdlLXZpcnQuZ2l0
   sshPrivateKey: $(base64 -w0 install/argo_ed25519)
   enableLfs: dHJ1ZQ==
 EOF
