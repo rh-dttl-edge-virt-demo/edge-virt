@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: image-registry-storage
 spec:
+  {{- with .Values.storageClassName }}
+  storageClassName: {{ . }}
+  {{- end }}
   accessModes:
     - {{ .Values.mode }}
   resources:
