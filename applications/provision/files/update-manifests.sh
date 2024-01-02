@@ -26,6 +26,8 @@ done
 # Wait extra for ACM to pick up the change
 if $certificate_rotated; then
 	sleep 600
+else
+	sleep 30
 fi
 
 # TODO: Work out how to better configure the registry for non-SNO
