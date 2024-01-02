@@ -10,19 +10,30 @@ get_name() {
 	get_secret -ogo-template='{{ (index .items 0).metadata.name }}'
 }
 get_manifests() {
-	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}' | sed 's/^/        /'
+	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}' | sed -e 's/^/        /' -e '/certificate-authority-data:/d'
 }
 
 while (($(import_secret_count) < 1)); do
 	sleep 1
 done
 
+# TODO: Work out how to better configure the registry for non-SNO
 cat <<EOF | oc apply -f-
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: $(get_name)
 data:
+  configure-registry.yaml: |
+    ---
+    apiVersion: imageregistry.operator.openshift.io/v1
+    kind: Config
+    metadata:
+      name: cluster
+    spec:
+      managementState: Managed
+      storage:
+        emptyDir: {}
   import-namespace.yaml: |
     ---
     apiVersion: v1
