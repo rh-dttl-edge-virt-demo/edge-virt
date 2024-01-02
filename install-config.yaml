@@ -2,7 +2,7 @@
 apiVersion: v1
 metadata:
   creationTimestamp: null
-  name: edge-virt
+  name: hub
 baseDomain: rh-dttl.edgelab.dev
 compute:
   - architecture: amd64

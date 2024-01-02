@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+        repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
         revision: HEAD
         files:
           - path: "clusters/**/provision.yaml"
@@ -24,7 +24,7 @@ spec:
       project: default
       source:
         path: applications/provision
-        repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+        repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
         targetRevision: HEAD
         helm:
           valueFiles:

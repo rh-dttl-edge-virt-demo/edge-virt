@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: applications/kubevirt
-    repoURL: git@github.com:rh-dttl-edge-virt-demo/hub-bootstrap.git
+    repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
     targetRevision: HEAD
   syncPolicy:
     automated:

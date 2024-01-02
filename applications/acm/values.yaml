@@ -4,4 +4,4 @@ agentServiceConfig:
   databaseStorage: 10Gi
   filesystemStorage: 100Gi
   imageStorage: 50Gi
-nlbDomain: nlb-apps.edge-virt.rh-dttl.edgelab.dev
+nlbDomain: nlb-apps.hub.rh-dttl.edgelab.dev

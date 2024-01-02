@@ -39,8 +39,8 @@ Usage
       argo.txt: <base64-encoded copy of your age secret>
     ```
 1. Run `make`
-1. Configure the [git repository](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap) with a [deploy key](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap/settings/keys), pasting in the contents of `install/argo_ed25519.pub`.
-1. Wire up the appropriate secrets for on-cluster activities like the equivalent key in `secrets.yaml` for the [secret access key](https://github.com/rh-dttl-edge-virt-demo/hub-bootstrap/blob/main/applications/cert-manager/values.yaml#L21) that cert-manager needs to answer DNS challenges. There are other things in the applications, those are out of scope for the readme.
+1. Configure the [git repository](https://github.com/rh-dttl-edge-virt-demo/edge-virt) with a [deploy key](https://github.com/rh-dttl-edge-virt-demo/edge-virt/settings/keys), pasting in the contents of `install/argo_ed25519.pub`.
+1. Wire up the appropriate secrets for on-cluster activities like the equivalent key in `secrets.yaml` for the [secret access key](https://github.com/rh-dttl-edge-virt-demo/edge-virt/blob/main/applications/cert-manager/values.yaml#L21) that cert-manager needs to answer DNS challenges. There are other things in the applications, those are out of scope for the readme.
 
 What it does (updated as we add things)
 ---
