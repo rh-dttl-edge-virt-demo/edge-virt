@@ -32,7 +32,7 @@ spec:
                 volumeMode: Filesystem
               source:
                 http:
-                  url: $(params.winIsoDownloadURL)
+                  url: $(params.winTenIsoDownloadURL)
         - name: waitForSuccess
           value: "true"
       taskRef:
