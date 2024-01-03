@@ -35,6 +35,10 @@ spec:
           kind: ManagedCluster
           jsonPointers:
             - /metadata/labels
+        - group: extensions.hive.openshift.io
+          kind: AgentClusterInstall
+          jsonPointers:
+            - /spec/imageSetRef/name
       syncPolicy:
         automated:
           prune: false
