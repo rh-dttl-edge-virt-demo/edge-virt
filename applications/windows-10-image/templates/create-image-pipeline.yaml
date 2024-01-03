@@ -21,7 +21,7 @@ spec:
             apiVersion: cdi.kubevirt.io/v1beta1
             kind: DataVolume
             metadata:
-              name: windows-10-iso
+              name: windows-10-iso-{{ .Release.Name }}
               annotations:
                 "cdi.kubevirt.io/storage.bind.immediate.requested": "true"
             spec:
@@ -33,11 +33,10 @@ spec:
                     storage: 7Gi
                 volumeMode: Filesystem
               source:
-                http:
-                  url: $(params.winTenIsoDownloadURL)
+                pvc:
+                  name: windows-10-iso
+                  namespace: {{ .Release.Namespace }}
         - name: waitForSuccess
-          value: "true"
-        - name: allowReplace
           value: "true"
       taskRef:
         kind: Task
@@ -193,6 +192,17 @@ spec:
         kind: Task
         name: cleanup-vm
       timeout: 10m0s
+    - name: delete-iso
+      params:
+        - name: deleteObject
+          value: "true"
+        - name: deleteObjectKind
+          value: DataVolume
+        - name: deleteObjectName
+          value: $(tasks.create-source-dv.results.name)
+      taskRef:
+        kind: Task
+        name: modify-data-object
     - name: delete-vm-rootdisk
       params:
         - name: deleteObject
