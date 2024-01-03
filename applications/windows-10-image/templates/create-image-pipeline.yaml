@@ -37,6 +37,8 @@ spec:
                   url: $(params.winTenIsoDownloadURL)
         - name: waitForSuccess
           value: "true"
+        - name: allowReplace:
+          value: "true"
       taskRef:
         kind: Task
         name: modify-data-object
@@ -65,16 +67,6 @@ spec:
       taskRef:
         kind: Task
         name: modify-data-object
-    - name: modify-windows-iso-file
-      params:
-        - name: pvcName
-          value: $(tasks.create-source-dv.results.name)
-      runAfter:
-        - create-source-dv
-        - create-root-dv
-      taskRef:
-        kind: Task
-        name: modify-windows-iso-file
     - name: create-vm-from-manifest
       params:
         - name: manifest
@@ -144,7 +136,8 @@ spec:
                         configMap:
                           name: $(params.autounattendConfigMapName)
       runAfter:
-        - modify-windows-iso-file
+        - create-source-dv
+        - create-root-dv
       taskRef:
         kind: Task
         name: create-vm-from-manifest
