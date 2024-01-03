@@ -177,9 +177,9 @@ spec:
                   name: $(tasks.create-root-dv.results.name)
                   namespace: {{ .Release.Namespace }}
         - name: waitForSuccess
-          value: true
+          value: "true"
         - name: allowReplace
-          value: true
+          value: "true"
       runAfter:
         - wait-for-vmi-status
       taskRef:
