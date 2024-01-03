@@ -1,6 +1,7 @@
 ---
 defaultAdminPassword: replaceme
 timeZone: Eastern Standard Time # See `tzutil /l` output on windows for a list of possibilities
+buildTimeout: 2h0m0s
 winTenIsoDownloadUrl: ""
 extraCommands: []
 # winTenIsoDownloadUrl: https://s3.yourdomain.com/yourbucket/yourwin10.iso

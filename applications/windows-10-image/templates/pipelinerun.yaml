@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: windows-installer-{{ .Release.Name }}-
+  labels:
+    tekton.dev/pipeline: windows-installer-{{ .Release.Name }}
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  pipelineRef:
+    name: windows-installer-{{ .Release.Name }}
+  timeouts:
+    pipeline: {{ .Values.buildTimeout }}
