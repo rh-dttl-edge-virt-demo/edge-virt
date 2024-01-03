@@ -37,7 +37,7 @@ spec:
                   url: $(params.winTenIsoDownloadURL)
         - name: waitForSuccess
           value: "true"
-        - name: allowReplace:
+        - name: allowReplace
           value: "true"
       taskRef:
         kind: Task
