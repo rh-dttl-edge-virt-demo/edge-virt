@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: registry-local-storage
+  name: pipelines
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
     name: in-cluster
-    namespace: openshift-image-registry
+    namespace: openshift-operators
   project: default
   source:
-    path: applications/registry-local-storage
+    path: applications/openshift-pipelines
     repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
     targetRevision: HEAD
   syncPolicy:
