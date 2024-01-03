@@ -1,0 +1,9 @@
+---
+defaultAdminPassword: replaceme
+timeZone: Eastern Standard Time # See `tzutil /l` output on windows for a list of possibilities
+winTenIsoDownloadUrl: null
+extraCommands: []
+# winTenIsoDownloadUrl: https://s3.yourdomain.com/yourbucket/yourwin10.iso
+# extraCommands:
+# - commandLine: powershell -Command "Invoke-WebRequest ifconfig.co"
+#   description: Read WAN IP address information for no reason
