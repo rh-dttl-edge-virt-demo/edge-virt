@@ -129,7 +129,7 @@ spec:
                         name: '$(tasks.create-root-dv.results.name)'
                     - name: virtiocontainerdisk
                       containerDisk:
-                        image: kubevirt/virtio-container-disk
+                        image: quay.io/kubevirt/virtio-container-disk:{{ .Values.virtioContainerDiskVersion }}
                     - name: sysprepconfig
                       sysprep:
                         configMap:
