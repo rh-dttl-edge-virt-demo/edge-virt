@@ -23,8 +23,8 @@ while ! isos_exist && ((ret == 0)); do
 			continue
 		fi
 		echo -n "Downloading $name discovery ISO"
-		created=$(bin/oc get -n "$namespace" infraenv "$name" -ogo-template='{{ range .status.conditions }}{{ if eq .type "ImageCreated" }}{{ .status }}{{ end }}{{ end }}')
-		while [ "$created" != "True" ]; do
+		created='{{ range .status.conditions }}{{ if eq .type "ImageCreated" }}{{ .status }}{{ end }}{{ end }}'
+		while [ "$(bin/oc get -n "$namespace" infraenv "$name" -ogo-template="$created")" != "True" ]; do
 			echo -n '.'
 			sleep 1
 		done
