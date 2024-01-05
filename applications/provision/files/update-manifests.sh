@@ -10,25 +10,15 @@ get_name() {
 	get_secret -ogo-template='{{ (index .items 0).metadata.name }}'
 }
 get_manifests() {
-	get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}' | sed -e 's/^/        /'
+	raw_manifests="$(get_secret -ogo-template='{{ $data := (index .items 0).data }}{{ index $data "crds.yaml" | base64decode }}{{ "\n" }}{{ index $data "import.yaml" | base64decode }}')"
+	orig_kubeconfig="$(echo "$raw_manifests" | awk '/kubeconfig:/{print $2}' | tr -d '"')"
+	modified_kubeconfig="$(echo "$orig_kubeconfig" | base64 -d | sed '/certificate-authority-data/d' | base64 -w0)"
+	echo "$raw_manifests" | sed -e "s/$orig_kubeconfig/$modified_kubeconfig/" -e 's/^/        /'
 }
 
 while (($(import_secret_count) < 1)); do
 	sleep 1
 done
-
-# Wait for the OpenShift API certificate to be rotated
-certificate_rotated=false
-while [ "$(oc get certificate -n openshift-config openshift-api -ojsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null)" != "True" ]; do
-	sleep 5
-	certificate_rotated=true
-done
-# Wait extra for ACM to pick up the change
-if $certificate_rotated; then
-	sleep 600
-else
-	sleep 30
-fi
 
 cat <<EOF | oc apply -f-
 apiVersion: v1
