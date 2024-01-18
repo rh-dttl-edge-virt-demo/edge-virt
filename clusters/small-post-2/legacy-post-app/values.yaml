@@ -1,0 +1,4 @@
+---
+extraCommands:
+  - commandLine: powershell -Command "Invoke-WebRequest -OutFile C:\Users\Administrator\Desktop\ExamplePostApp.exe https://s3.jharmison.com/public/ExamplePostApp.exe"
+    description: Downloads the Post application to the Administrator desktop

@@ -1,0 +1,5 @@
+---
+deviceSelector:
+  paths:
+    - /dev/disk/by-id/ata-SAMSUNG_MZ7LM3T8HMLP-00005_S2TYNX0HC03816
+    - /dev/disk/by-id/ata-Samsung_SSD_970_EVO_Plus_1TB_S59ANJ0N201769T
