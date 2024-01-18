@@ -4,6 +4,6 @@ sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGz5L05PFUIOBpqPfyGynU4PgCOgDoBjSIh+
 
 environments:
   - name: hamilton-house
-    location: South Carolina
+    location: South_Carolina
   - name: harmison-house
     location: Georgia
