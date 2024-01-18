@@ -11,4 +11,4 @@ cluster:
 nodes:
   notebook1:
     spec:
-      installation_disk_id: /dev/disk/by-id/nvme-Samsung_SSD_960_PRO_2TB_S3EXNCAHB01022R
+      installation_disk_id: /dev/disk/by-id/nvme-eui.ace42e00901e7f9e2ee4ac0000000001
