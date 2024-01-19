@@ -4,6 +4,7 @@
 public_keys=(
 	age1px4xaxcy73xdqdrxadc8yecqksf4le3n0l2l9h0xj2m5eneljvwq3asw2h # argocd
 	age1ky5amdnkwzj03gwal0cnk7ue7vsd0n64pxm50nxgycssp7vgpqvq9s7lyw # james
+	age1tjnq5354jlqgmxhag5gr3qm070rvdewmc9mfwuzanj5adnqfnyyq08keng # kelly
 )
 keystring="$(
 	IFS=,
