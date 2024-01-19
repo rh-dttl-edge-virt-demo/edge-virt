@@ -9,6 +9,16 @@ for prereq in "${prereqs[@]}"; do
 		failed=true
 	fi
 done
+if ! command -v sha256sum &>/dev/null; then
+	if ! command -v shasum &>/dev/null; then
+		echo "Prereq sha256sum or shasum is not found in path - please install one." >&2
+		failed=true
+	else
+		shacmd=(shasum -a 256)
+	fi
+else
+	shacmd=(sha256sum)
+fi
 if $failed; then
 	exit 1
 fi
@@ -32,9 +42,9 @@ function needs_update {
 	# If the ciphertext is modified more recently, we need to check if we have to update the content
 	if [ "$ct" -nt "$pt" ]; then
 		content="$(sops --decrypt "$ct" | yq e)"
-		sha256sum="$(echo "$content" | sha256sum | cut -d' ' -f1)"
+		sha256sum="$(echo "$content" | "${shacmd[@]}" | cut -d' ' -f1)"
 		# If we need to update the plaintext, return the content
-		if ! echo "$sha256sum  $pt" | sha256sum -c - >/dev/null 2>&1; then
+		if ! echo "$sha256sum  $pt" | "${shacmd[@]}" -c - >/dev/null 2>&1; then
 			echo "$content"
 			return 0
 		fi
