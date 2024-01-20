@@ -7,3 +7,5 @@ environments:
     location: South_Carolina
   - name: harmison-house
     location: Georgia
+  - name: hair-house
+    location: New_Jersey
