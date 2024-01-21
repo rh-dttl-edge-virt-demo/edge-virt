@@ -11,8 +11,6 @@ cluster:
   workerNodes: 3
   platformType: None
   networking:
-    machineNetwork:
-      - cidr: 192.168.111.0/24
     clusterNetwork:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
