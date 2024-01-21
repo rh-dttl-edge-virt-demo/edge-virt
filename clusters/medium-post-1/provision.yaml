@@ -2,6 +2,7 @@
 cluster:
   name: medium-post-1
   env: hair-house
+  platformType: BareMetal
   controlPlaneNodes: 3
   workerNodes: 0
   networking:
