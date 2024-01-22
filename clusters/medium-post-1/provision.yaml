@@ -5,9 +5,6 @@ cluster:
   platformType: BareMetal
   controlPlaneNodes: 3
   workerNodes: 0
-  networking:
-    machineNetwork:
-      - cidr: 192.168.1.0/24
   apiVIP: 192.168.1.21
   ingressVIP: 192.168.1.20
 
