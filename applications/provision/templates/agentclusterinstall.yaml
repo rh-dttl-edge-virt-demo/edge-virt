@@ -18,11 +18,13 @@ spec:
     {{- end }}
   sshPublicKey: {{ .Values.sshKey }}
   mastersSchedulable: {{ if lt (int .Values.cluster.workerNodes) 2 }}true{{ else }}false{{ end }}
-  {{- with .Values.cluster.apiVIPs }}
+  {{- with .Values.cluster.apiVIP }}
+  apiVIP: {{ . }}
   apiVIPs:
-    {{- toYaml . | nindent 4 }}
+  - {{ . }}
   {{- end }}
-  {{- with .Values.cluster.ingressVIPs }}
+  {{- with .Values.cluster.ingressVIP }}
+  ingressVIP: {{ . }}
   ingressVIPs:
-    {{- toYaml . | nindent 4 }}
+  - {{ . }}
   {{- end }}

@@ -17,7 +17,5 @@ cluster:
     serviceNetwork:
       - 172.30.0.0/16
     networkType: OVNKubernetes
-  apiVIPs: []
-  ingressVIPs: []
 
 nodes: []
