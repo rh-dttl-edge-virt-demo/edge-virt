@@ -1,17 +1,17 @@
 CLUSTER_NAME := $(shell hack/yq .metadata.name install-config.yaml)
 BASE_DOMAIN := $(shell hack/yq .baseDomain install-config.yaml)
-CLUSTER_VERSION := 4.14
+CLUSTER_VERSION := 4.14.6
 
 .PHONY: all
 all: bootstrap isos
 
 bin/openshift-install:
 	mkdir -p bin
-	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-$(CLUSTER_VERSION)/openshift-install-linux.tar.gz | tar xvzf - -C ./bin
+	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$(CLUSTER_VERSION)/openshift-install-linux.tar.gz | tar xvzf - -C ./bin
 
 bin/oc:
 	mkdir -p bin
-	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-$(CLUSTER_VERSION)/openshift-client-linux.tar.gz | tar xvzf - -C ./bin
+	curl -sLo- https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$(CLUSTER_VERSION)/openshift-client-linux.tar.gz | tar xvzf - -C ./bin
 
 install/id_ed25519: install-config.yaml
 	mkdir -p install
