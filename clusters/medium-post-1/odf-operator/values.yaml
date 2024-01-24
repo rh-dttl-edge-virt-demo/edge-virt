@@ -1,7 +1,8 @@
 ---
 storageDeviceSets:
   - config: {}
-    count: 1
+    count: 3
+    monDataDirHostPath: /var/lib/rook
     dataPVCTemplate:
       metadata: {}
       spec:
@@ -9,13 +10,13 @@ storageDeviceSets:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 931Gi
+            storage: 1Gi
         storageClassName: localblock
         volumeMode: Block
       status: {}
     name: ocs-deviceset-localblock
     placement: {}
-    portable: true
+    portable: false
     preparePlacement: {}
-    replica: 3
+    replica: 1
     resources: {}
