@@ -10,6 +10,9 @@ spec:
   encryption:
     kms: {}
   externalStorage: {}
+  {{- with .Values.monDataDirHostPath }}
+  monDataDirHostPath: {{ quote . }}
+  {{- end }}
   managedResources:
     cephBlockPools: {}
     cephConfig: {}

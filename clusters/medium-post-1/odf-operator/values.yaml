@@ -1,8 +1,9 @@
 ---
+monDataDirHostPath: /var/lib/rook
+
 storageDeviceSets:
   - config: {}
     count: 3
-    monDataDirHostPath: /var/lib/rook
     dataPVCTemplate:
       metadata: {}
       spec:
