@@ -7,6 +7,6 @@ metadata:
 spec:
   workload:
     manifests:
-    {{- range $path, $_ := .Files.Glob "files/gitops/*.yaml" }}
+    {{- range $path, $_ := .Files.Glob "gitops/*.yaml" }}
       - {{ trim (tpl ($.Files.Get $path) $ | nindent 8) }}
     {{- end }}
