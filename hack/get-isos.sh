@@ -6,17 +6,32 @@ export KUBECONFIG="${PWD}/install/auth/kubeconfig"
 is_iso() {
 	file "$1" | grep -qF 'ISO 9660'
 }
-isos_exist() {
-	compgen -G "install/*.iso" >/dev/null
+cert_manager_status() {
+	bin/oc --insecure-skip-tls-verify=true get application.argoproj -n openshift-gitops cert-manager -ojsonpath='{.status.sync.status}'
+}
+api_server_condition() {
+	bin/oc --insecure-skip-tls-verify=true get co kube-apiserver -ogo-template='{{ range .status.conditions }}{{ if eq .type "'"$1"'" }}{{ .status }}{{ end }}{{ end }}'
+}
+api_updated() {
+	if [ "$(cert_manager_status)" = "Synced" ]; then
+		if [ "$(api_server_condition Available)" = "True" ] && [ "$(api_server_condition Progressing)" = "False" ]; then
+			return 0
+		fi
+	fi
+	return 1
 }
 
 ret=0
 
-echo -n "Waiting for API to respond with discovery iso"
-while ! isos_exist && ((ret == 0)); do
-	echo -n '.'
+if ! api_updated; then
+	echo -n "Waiting for API server to roll out certificates"
+	while ! api_updated; do
+		echo -n '.'
+	done
+	echo
+fi
+while ((ret == 0)); do
 	while read -r namespace name; do
-		echo
 		iso="install/$name.iso"
 		if [ -e "$iso" ] && is_iso "$iso"; then
 			echo "Already have $name discovery ISO"
@@ -37,7 +52,11 @@ while ! isos_exist && ((ret == 0)); do
 			((ret += 1))
 		fi
 	done < <(bin/oc get infraenv -Aogo-template='{{ range .items }}{{ .metadata.namespace }} {{ .metadata.name }}{{ "\n" }}{{ end }}' 2>/dev/null)
-	if ! isos_exist; then sleep 5; fi
+	if ! compgen -G "install/*.iso" >/dev/null 2>&1; then
+		sleep 5
+	elif ((ret == 0)); then
+		break
+	fi
 done
 
 echo
