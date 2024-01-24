@@ -17,6 +17,7 @@ spec:
     helm:
       valueFiles:
         - /clusters/{{ $.Values.cluster.name }}/odf-operator/values.yaml
+        - /clusters/{{ $.Values.cluster.name }}/local-storage-operator/values.yaml
   syncPolicy:
     automated:
       prune: true

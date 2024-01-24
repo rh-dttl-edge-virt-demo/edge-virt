@@ -2,7 +2,10 @@
 disks:
   - name: node1-hdd1
     path: /dev/disk/by-id/wwn-0x5000c500dbdae748
+    node: node1
   - name: node2-hdd1
     path: /dev/disk/by-id/wwn-0x5000c500dc843ee0
+    node: node2
   - name: node3-hdd1
     path: /dev/disk/by-id/wwn-0x5000c500c98845a4
+    node: node3
