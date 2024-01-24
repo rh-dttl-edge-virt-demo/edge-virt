@@ -1,0 +1,21 @@
+---
+storageDeviceSets:
+  - config: {}
+    count: 1
+    dataPVCTemplate:
+      metadata: {}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 931Gi
+        storageClassName: localblock
+        volumeMode: Block
+      status: {}
+    name: ocs-deviceset-localblock
+    placement: {}
+    portable: true
+    preparePlacement: {}
+    replica: 3
+    resources: {}
