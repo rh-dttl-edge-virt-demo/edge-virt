@@ -6,4 +6,6 @@ metadata:
   name: {{ .node }}
   labels:
     cluster.ocs.openshift.io/openshift-storage: ""
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
 {{- end }}
