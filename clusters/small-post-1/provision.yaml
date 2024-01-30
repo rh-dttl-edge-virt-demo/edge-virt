@@ -9,6 +9,6 @@ cluster:
       - cidr: 10.1.1.0/24
 
 nodes:
-  mf3:
+  sno:
     spec:
-      installation_disk_id: /dev/disk/by-id/nvme-eui.0026b7685968fbd5
+      installation_disk_id: /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b4110c228

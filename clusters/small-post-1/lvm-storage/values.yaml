@@ -1,4 +1,4 @@
 ---
 deviceSelector:
   paths:
-  - /dev/disk/by-path/pci-0000:05:00.1-ata-1
+    - /dev/disk/by-id/wwn-0x5002538f3220902d
