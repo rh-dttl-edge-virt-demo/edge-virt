@@ -1,13 +1,6 @@
 ---
 kubelet:
   master: {}
-  worker:
-    podsPerCore: 15
-    maxPods: 500
-    systemReserved:
-      cpu: 2000m
-      memory: 2Gi
+  worker: {}
 
-desiredUpdate:
-  version: 4.14.6
-  architecture: Multi
+desiredUpdate: {}
