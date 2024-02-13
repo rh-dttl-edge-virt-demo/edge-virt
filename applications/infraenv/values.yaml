@@ -3,8 +3,6 @@ pullSecret: <your actual pull secret>
 sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGz5L05PFUIOBpqPfyGynU4PgCOgDoBjSIh+y3f17S02 admin@hub.rh-dttl.edgelab.dev
 
 environments:
-  - name: hamilton-house
-    location: South_Carolina
   - name: harmison-house
     location: Georgia
   - name: hair-house

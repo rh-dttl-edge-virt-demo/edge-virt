@@ -1,7 +1,0 @@
----
-hyperconverged:
-  featureGates:
-    deployTektonTaskResources: true
-  workloadUpdateStrategy:
-    workloadUpdateMethods:
-      - Evict

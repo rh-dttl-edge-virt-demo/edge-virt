@@ -1,4 +1,0 @@
----
-deviceSelector:
-  paths:
-    - /dev/disk/by-id/nvme-eui.0026b7685557d3c5
