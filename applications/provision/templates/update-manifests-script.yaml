@@ -4,4 +4,4 @@ kind: ConfigMap
 metadata:
   name: update-manifests
 data:
-{{ (.Files.Glob "files/update-manifests*").AsConfig | indent 2 }}
+{{ regexReplaceAll "OPENSHIFT_TOOLS_IMAGE" (.Files.Glob "files/update-manifests*").AsConfig .Values.openshiftToolsImage | indent 2 }}

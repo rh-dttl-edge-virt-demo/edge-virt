@@ -79,7 +79,7 @@ $(get_manifests)
           restartPolicy: Never
           containers:
             - name: spoke-config
-              image: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:535ce24b5f1894d2a07bfa7eed7ad028ffde0659693f2a571ac4712a21cd028c
+              image: OPENSHIFT_TOOLS_IMAGE
               imagePullPolicy: IfNotPresent
               command: ["/bin/bash"]
               args:
