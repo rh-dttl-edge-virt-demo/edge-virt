@@ -71,6 +71,7 @@ spec:
               kind: ConfigMap
               metadata:
                 name: image-registry-s3-bundle
+                namespace: openshift-config
               data:
                 ca-bundle.crt: |-
               $(echo "$ca" | sed 's/^/    /')
