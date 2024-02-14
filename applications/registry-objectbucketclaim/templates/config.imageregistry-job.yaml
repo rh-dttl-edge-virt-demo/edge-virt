@@ -63,15 +63,34 @@ spec:
                 REGISTRY_STORAGE_S3_ACCESSKEY: $access_key
                 REGISTRY_STORAGE_S3_SECRETKEY: $secret_key
               EOF
+              {{- if .Values.useServiceCA }}
+              echo 'Configuring the CA for S3 access'
+              ca=$(oc get cm -n openshift-config  -ogo-template='{{ index .data "service-ca.crt" }}')
+              cat << EOF | oc apply -f -
+              apiVersion: v1
+              kind: ConfigMap
+              metadata:
+                name: image-registry-s3-bundle
+              data:
+                ca-bundle.crt: |-
+              $(echo "$ca" | sed 's/^/    /')
+              EOF
+              {{- end }}
               echo 'Configuring Image Registry.'
               cat << EOF | oc patch config.imageregistry.operator.openshift.io cluster --type merge --patch-file /dev/stdin
               spec:
                 managementState: Managed
                 storage:
+                  managementState: Unmanaged
                   s3:
                     bucket: "$bucket"
                     region: "${region:-none}"
                     regionEndpoint: "$endpoint"
+                    virtualHostedStyle: false
+                    encrypt: false
+                    {{- if .Values.useServiceCA }}
+                    trustedCA: image-registry-s3-bundle
+                    {{- end }}
                 disableRedirect: true
                 replicas: 2
               EOF
