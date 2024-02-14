@@ -89,7 +89,8 @@ spec:
                     virtualHostedStyle: false
                     encrypt: false
                     {{- if .Values.useServiceCA }}
-                    trustedCA: image-registry-s3-bundle
+                    trustedCA:
+                      name: image-registry-s3-bundle
                     {{- end }}
                 disableRedirect: true
                 replicas: 2
