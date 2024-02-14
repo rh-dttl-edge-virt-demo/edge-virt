@@ -1,0 +1,73 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: bucket-secrets-
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook: Sync
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      serviceAccount: bucket-secrets
+      serviceAccountName: bucket-secrets
+      restartPolicy: Never
+      containers:
+        - name: config-munge
+          image: {{ .Values.openshiftToolsImage }}
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash"]
+          args:
+            - -ce
+            - |-
+              echo -n 'Waiting for OBC to be bound'
+              timeout=600
+              time=0
+              step=5
+              while ! [ "$(oc get objectbucketclaim registry-bucket -ojsonpath='{.status.phase}' 2>/dev/null)" = "Bound" ]; do
+                if (( time >= timeout )); then
+                  echo
+                  echo "Timed out waiting for OBC binding" >&2
+                  exit 1
+                fi
+                sleep $step
+                (( time += step ))
+                echo -n .
+              done; echo
+              echo -n 'Applying OBC secret'
+              obc_cm_json="$(oc get cm registry-bucket -ojson)"
+              echo -n .
+              obc_secret_json="$(oc get secret registry-bucket -ojson)"
+              echo -n .
+              access_key="$(<<< "$obc_secret_json" jq -r '.data.AWS_ACCESS_KEY_ID')"
+              echo -n .
+              secret_key="$(<<< "$obc_secret_json" jq -r '.data.AWS_SECRET_ACCESS_KEY')"
+              echo -n .
+              bucket="$(<<< "$obc_cm_json" jq -r '.data.BUCKET_NAME')"
+              echo -n .
+              region="$(<<< "$obc_cm_json" jq -r '.data.BUCKET_REGION')"
+              echo -n .
+              endpoint="http://$(<<< "$obc_cm_json" jq -r '.data.BUCKET_HOST'):$(<<< "$obc_cm_json" jq -r '.data.BUCKET_PORT')"
+              echo .
+              cat << EOF | oc apply -f -
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                name: image-registry-private-configuration-user
+              data:
+                REGISTRY_STORAGE_S3_ACCESSKEY: $access_key
+                REGISTRY_STORAGE_S3_SECRETKEY: $secret_key
+              EOF
+              echo 'Configuring Image Registry.'
+              cat << EOF | oc patch config.imageregistry.operator.openshift.io cluster --type merge --patch-file /dev/stdin
+              spec:
+                managementState: Managed
+                storage:
+                  s3:
+                    bucket: "$bucket"
+                    region: "${region:-none}"
+                    regionEndpoint: "$endpoint"
+                disableRedirect: true
+                replicas: 2
+              EOF
