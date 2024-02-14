@@ -48,7 +48,12 @@ spec:
               echo -n .
               region="$(<<< "$obc_cm_json" jq -r '.data.BUCKET_REGION')"
               echo -n .
-              endpoint="http://$(<<< "$obc_cm_json" jq -r '.data.BUCKET_HOST'):$(<<< "$obc_cm_json" jq -r '.data.BUCKET_PORT')"
+              port=$(<<< "$obc_cm_json" jq -r '.data.BUCKET_PORT')
+              if [ $port = "443" ]; then
+                endpoint="https://$(<<< "$obc_cm_json" jq -r '.data.BUCKET_HOST'):$port"
+              else
+                endpoint="http://$(<<< "$obc_cm_json" jq -r '.data.BUCKET_HOST'):$port"
+              fi
               echo .
               cat << EOF | oc apply -f -
               apiVersion: v1
