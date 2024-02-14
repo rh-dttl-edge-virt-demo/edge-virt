@@ -65,7 +65,7 @@ spec:
               EOF
               {{- if .Values.useServiceCA }}
               echo 'Configuring the CA for S3 access'
-              ca=$(oc get cm -n openshift-config  -ogo-template='{{ index .data "service-ca.crt" }}')
+              ca=$(oc get cm -n openshift-config  -ogo-template='{{ "{{" }} index .data "service-ca.crt" {{ "}}" }}')
               cat << EOF | oc apply -f -
               apiVersion: v1
               kind: ConfigMap
