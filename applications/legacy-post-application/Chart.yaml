@@ -1,0 +1,13 @@
+---
+apiVersion: v2
+name: legacy-post-application
+description: A helm chart to deploy the Legacy Post Application as an implementation of a Windows 10 VM
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+  - name: windows-10-image
+    version: 0.1.0
+    repository: file://../windows-10-image
+    alias: windows10Image

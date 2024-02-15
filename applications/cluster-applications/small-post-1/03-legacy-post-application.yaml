@@ -11,13 +11,13 @@ spec:
     namespace: openshift-cnv
   project: default
   source:
-    path: applications/windows-10-image
+    path: applications/legacy-post-application
     repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
     targetRevision: HEAD
     helm:
       valueFiles:
-        - /clusters/{{ $.Values.cluster.name }}/legacy-post-app/values.yaml
-        - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ $.Values.cluster.name }}/legacy-post-app/secrets.enc.yaml
+        - /clusters/{{ $.Values.cluster.name }}/legacy-post-application/values.yaml
+        - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ $.Values.cluster.name }}/legacy-post-application/secrets.enc.yaml
   syncPolicy:
     automated:
       prune: true

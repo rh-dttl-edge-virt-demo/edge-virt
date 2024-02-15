@@ -1,0 +1,13 @@
+---
+windows10Image:
+  postCode: "EXAMPLE"
+  defaultAdminPassword: replaceme
+  winTenIsoDownloadURL: ""
+  timeZone: Eastern Standard Time
+  extraCommands:
+    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp' ; Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://s3.jharmison.com/public/ExamplePostApp.exe"
+      description: Downloads the Post application
+    - commandLine: powershell -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
+      description: Set the POST_CD environment variable machine-wide
+    - commandLine: powershell -Command "$WshShell = New-Object -comObject WScript.Shell ; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk') ; $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' ; $Shortcut.save()"
+      description: Creates a shortcut to the Post application on the Administrator desktop

@@ -182,7 +182,7 @@ data:
                     <SynchronousCommand wcm:action="add">
                         <Order>{{ add $i 5 }}</Order>
                         <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>{{ $command.commandLine }}</CommandLine>
+                        <CommandLine>{{ tpl $command.commandLine $ }}</CommandLine>
                         <Description>{{ $command.description }}</Description>
                     </SynchronousCommand>
                     {{- end }}
