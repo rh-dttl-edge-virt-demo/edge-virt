@@ -1,4 +1,0 @@
----
-hyperconverged:
-  featureGates:
-    deployTektonTaskResources: true

@@ -5,5 +5,3 @@ sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGz5L05PFUIOBpqPfyGynU4PgCOgDoBjSIh+
 environments:
   - name: harmison-house
     location: Georgia
-  - name: hair-house
-    location: New_Jersey
