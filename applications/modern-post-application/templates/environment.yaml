@@ -1,0 +1,13 @@
+{{- if .Values.postCode }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "modern-post-application.fullname" . }}-env
+  labels:
+    {{- include "modern-post-application.labels" . | nindent 4 }}
+data:
+  {{- with .Values.postCode }}
+  POST_CD: {{ toYaml . }}
+  {{- end }}
+{{- end }}

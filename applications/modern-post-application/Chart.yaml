@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: modern-post-application
+description: A helm chart to deploy the Modern Post Application as an containerized Deployment
+type: application
+version: 0.1.0
+appVersion: 0.1.0
