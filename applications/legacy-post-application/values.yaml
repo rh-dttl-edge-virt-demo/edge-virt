@@ -1,11 +1,12 @@
 ---
 windows10Image:
   postCode: "EXAMPLE"
+  applicationVersion: v0.1.0
   defaultAdminPassword: replaceme
   winTenIsoDownloadURL: ""
   timeZone: Eastern Standard Time
   extraCommands:
-    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp' ; Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://s3.jharmison.com/public/ExamplePostApp.exe"
+    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp' ; Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.applicationVersion }}/ExamplePostApp.exe"
       description: Downloads the Post application
     - commandLine: powershell -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
       description: Set the POST_CD environment variable machine-wide
