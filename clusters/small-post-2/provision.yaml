@@ -11,4 +11,4 @@ cluster:
 nodes:
   sno:
     spec:
-      installation_disk_id: /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b4110c228
+      installation_disk_id: /dev/disk/by-id/wwn-0x500a0751e8883984
