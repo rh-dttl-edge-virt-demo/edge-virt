@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oauth
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    name: in-cluster
+    namespace: openshift-config
+  project: default
+  source:
+    path: applications/oauth
+    repoURL: git@github.com:rh-dttl-edge-virt-demo/edge-virt.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - /clusters/{{ $.Values.cluster.name }}/oauth/values.yaml
+        - secrets+age-import:///helm-secrets-private-keys/argo.txt?../../clusters/{{ $.Values.cluster.name }}/oauth/secrets.enc.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
