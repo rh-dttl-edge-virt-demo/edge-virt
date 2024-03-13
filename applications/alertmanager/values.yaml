@@ -1,4 +1,7 @@
 ---
+cluster:
+  name: hub
+
 slack:
   apiUrl: <insert your slack webhook url>
   channel: project-rh-dttl-eldge
@@ -16,10 +19,10 @@ slack:
     {{- end }}
   text: |-
     {{ range .Alerts -}}
-    **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-    **Description:** {{ .Annotations.description }}
-    **Details:**
-      {{ range .Labels.SortedPairs }} • **{{ .Name }}:** `{{ .Value }}`
+    *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+    *Description:* {{ .Annotations.description }}
+    *Details:*
+      {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
       {{ end }}
     {{ end }}
   username: Alertmanager

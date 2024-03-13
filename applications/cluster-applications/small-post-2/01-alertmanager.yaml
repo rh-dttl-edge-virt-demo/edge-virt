@@ -17,6 +17,7 @@ spec:
     helm:
       valueFiles:
         - secrets+age-import:///helm-secrets-private-keys/argo.txt?secrets.enc.yaml
+        - /clusters/{{ $.Values.cluster.name }}/provision.yaml
   syncPolicy:
     automated:
       prune: true
