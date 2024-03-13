@@ -3,9 +3,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: openshift-gitops-admin
 subjects:
+  {{- range $sa := tuple "gitops-service-cluster" "openshift-gitops-applicationset-controller" "openshift-gitops-argocd-application-controller" "openshift-gitops-argocd-dex-server" "openshift-gitops-argocd-grafana" "openshift-gitops-argocd-redis" "openshift-gitops-argocd-redis-ha" "openshift-gitops-argocd-server" }}
   - kind: ServiceAccount
-    name: openshift-gitops-argocd-application-controller
+    name: {{ $sa }}
     namespace: openshift-gitops
+  {{- range }}
+  - kind: ServiceAccount
+    name: openshift-gitops-operator-controller-manager
+    namespace: openshift-operators
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
