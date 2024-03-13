@@ -6,8 +6,24 @@ windows10Image:
   winTenIsoDownloadURL: ""
   timeZone: Eastern Standard Time
   extraCommands:
-    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp' ; Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.applicationVersion }}/ExamplePostApp.exe"
+    - commandLine: reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3" /t REG_DWORD /v 1A10 /f /d 0
+      description: Completely trust cookies
+    - commandLine: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer /t REG_SZ /v SmartScreenEnabled /f /d "Off"
+      description: Disable SmartScreen for built-in apps
+    - commandLine: reg add "HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\PhishingFilter /t REG_DWORD /v EnabledV9 /f /d 0
+      description: Disable SmartScreen for Microsoft Edge
+    - commandLine: reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost /t REG_DWORD /v EnableWebContentEvaluation /f /d 0
+      description: Disable SmartScreen for Windows Store Apps
+    - commandLine: >-
+        powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp';
+        while (-not $(Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) {
+          Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'
+          https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe;
+          Start-Sleep 10;
+        }"
       description: Downloads the Post application
+    - commandLine: powershell -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
+      description: Ensure we can run the Example Post application
     - commandLine: powershell -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
       description: Set the POST_CD environment variable machine-wide
     - commandLine: powershell -Command "$WshShell = New-Object -comObject WScript.Shell ; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk') ; $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' ; $Shortcut.save()"
