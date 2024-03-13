@@ -7,7 +7,7 @@ subjects:
   - kind: ServiceAccount
     name: {{ $sa }}
     namespace: openshift-gitops
-  {{- range }}
+  {{- end }}
   - kind: ServiceAccount
     name: openshift-gitops-operator-controller-manager
     namespace: openshift-operators
