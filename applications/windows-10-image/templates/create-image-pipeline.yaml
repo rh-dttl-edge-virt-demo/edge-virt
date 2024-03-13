@@ -38,6 +38,8 @@ spec:
                   namespace: {{ .Release.Namespace }}
         - name: waitForSuccess
           value: "true"
+        - name: allowReplace
+          value: "true"
       taskRef:
         kind: Task
         name: modify-data-object
@@ -62,6 +64,8 @@ spec:
               source:
                 blank: {}
         - name: waitForSuccess
+          value: "true"
+        - name: allowReplace
           value: "true"
       taskRef:
         kind: Task
