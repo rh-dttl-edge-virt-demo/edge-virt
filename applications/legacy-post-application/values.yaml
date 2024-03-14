@@ -1,26 +1,9 @@
 ---
-windows10Image:
+global:
   postCode: "EXAMPLE"
   applicationVersion: v0.1.0
-  defaultAdminPassword: replaceme
-  winTenIsoDownloadURL: ""
-  timeZone: Eastern Standard Time
+
+windows10Image:
   extraCommands:
-    - commandLine: reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\3" /t REG_DWORD /v 1A10 /f /d 0
-      description: Completely trust cookies
-    - commandLine: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /t REG_SZ /v SmartScreenEnabled /f /d "Off"
-      description: Disable SmartScreen for built-in apps
-    - commandLine: reg add "HKCU\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\PhishingFilter" /t REG_DWORD /v EnabledV9 /f /d 0
-      description: Disable SmartScreen for Microsoft Edge
-    - commandLine: reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /t REG_DWORD /v EnableWebContentEvaluation /f /d 0
-      description: Disable SmartScreen for Windows Store Apps
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
-      description: Ensure post directory exists
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "Do { Invoke-RestMethod -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri 'https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe' -TimeoutSec 10 -UseBasicParsing } While ( -not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe') )"
+    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -Command "& {$AppLoc = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'; New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'; Do { Invoke-RestMethod -OutFile $AppLoc -Uri 'https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.global.applicationVersion }}.exe' -TimeoutSec 10 -UseBasicParsing } While ( -not (Test-Path $AppLoc) ); Unblock-File -Path $AppLoc; $WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk'); $Shortcut.TargetPath = $AppLoc; $Shortcut.save(); [System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.global.postCode }}', 'Machine'); Start-Sleep -Seconds 5; Stop-Computer -ComputerName localhost -Force; }"
       description: Downloads the Post application
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
-      description: Ensure we can run the Example Post application
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk'); $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'; $Shortcut.save()"
-      description: Creates a shortcut to the Post application on the Administrator desktop
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
-      description: Set the POST_CD environment variable machine-wide

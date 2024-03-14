@@ -186,12 +186,6 @@ data:
                         <Description>{{ $command.description }}</Description>
                     </SynchronousCommand>
                     {{- end }}
-                    <SynchronousCommand wcm:action="add">
-                        <Order>{{ add 5 (len .Values.extraCommands) }}</Order>
-                        <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>cmd /c shutdown /s /f /t 10</CommandLine>
-                        <Description>Shuts down the system</Description>
-                    </SynchronousCommand>
                 </FirstLogonCommands>
                 <TimeZone>{{ .Values.timeZone }}</TimeZone>
             </component>
