@@ -4,3 +4,5 @@ kubelet:
   worker: {}
 
 desiredUpdate: {}
+
+techPreview: false
