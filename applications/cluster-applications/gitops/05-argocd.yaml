@@ -36,10 +36,10 @@ spec:
     resources:
       limits:
         cpu: "2"
-        memory: 2Gi
+        memory: 1Gi
       requests:
         cpu: 250m
-        memory: 1Gi
+        memory: 512Mi
     sharding: {}
   grafana:
     enabled: false
@@ -137,11 +137,11 @@ spec:
         name: helm-secrets-private-keys
     resources:
       limits:
-        cpu: "2"
-        memory: 2Gi
+        cpu: "1"
+        memory: 1536Mi
       requests:
-        cpu: 500m
-        memory: 1Gi
+        cpu: 250m
+        memory: 512Mi
   extraConfig:
     helm.valuesFileSchemes: >-
       secrets+gpg-import, secrets+gpg-import-kubernetes,
