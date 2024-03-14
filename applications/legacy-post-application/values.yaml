@@ -16,7 +16,7 @@ windows10Image:
       description: Disable SmartScreen for Windows Store Apps
     - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
       description: Ensure post directory exists
-    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "Do { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri 'https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe' -TimeoutSec 2 } While ( -not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe') )"
+    - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "Do { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri 'https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe' -TimeoutSec 10 } While ( -not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe') )"
       description: Downloads the Post application
     - commandLine: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
       description: Ensure we can run the Example Post application
