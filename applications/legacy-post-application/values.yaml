@@ -14,13 +14,13 @@ windows10Image:
       description: Disable SmartScreen for Microsoft Edge
     - commandLine: reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /t REG_DWORD /v EnableWebContentEvaluation /f /d 0
       description: Disable SmartScreen for Windows Store Apps
-    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
+    - commandLine: powershell -NoProfile -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
       description: Ensure post directory exists
-    - commandLine: powershell -Command "while (-not $(Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { if (Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe) { Write-Host 'Download completed' } else { Start-Sleep 10 }}"
+    - commandLine: powershell -NoProfile "& {while (-not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe; if ($?) { Write-Host 'Download completed' } else { Write-Host 'Retrying...'; Start-Sleep 10 }}}"
       description: Downloads the Post application
-    - commandLine: powershell -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
+    - commandLine: powershell -NoProfile -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
       description: Ensure we can run the Example Post application
-    - commandLine: powershell -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
-      description: Set the POST_CD environment variable machine-wide
-    - commandLine: powershell -Command "$WshShell = New-Object -comObject WScript.Shell ; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk') ; $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' ; $Shortcut.save()"
+    - commandLine: powershell -NoProfile "& {$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk'); $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'; $Shortcut.save()}"
       description: Creates a shortcut to the Post application on the Administrator desktop
+    - commandLine: powershell -NoProfile -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
+      description: Set the POST_CD environment variable machine-wide
