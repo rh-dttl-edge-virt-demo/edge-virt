@@ -14,7 +14,9 @@ windows10Image:
       description: Disable SmartScreen for Microsoft Edge
     - commandLine: reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AppHost" /t REG_DWORD /v EnableWebContentEvaluation /f /d 0
       description: Disable SmartScreen for Windows Store Apps
-    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'; while (-not $(Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe; Start-Sleep 10; }"
+    - commandLine: powershell -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
+      description: Ensure post directory exists
+    - commandLine: powershell -Command "while (-not $(Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { if (Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe) { Write-Host 'Download completed' } else { Start-Sleep 10 }}"
       description: Downloads the Post application
     - commandLine: powershell -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
       description: Ensure we can run the Example Post application
