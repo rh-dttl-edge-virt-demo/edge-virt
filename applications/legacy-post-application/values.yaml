@@ -16,11 +16,11 @@ windows10Image:
       description: Disable SmartScreen for Windows Store Apps
     - commandLine: powershell -NoProfile -Command "New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'"
       description: Ensure post directory exists
-    - commandLine: powershell -NoProfile "& {while (-not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe; if ($?) { Write-Host 'Download completed' } else { Write-Host 'Retrying...'; Start-Sleep 10 }}}"
+    - commandLine: powershell -NoProfile -Command "& {while (-not (Test-Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe')) { Invoke-WebRequest -OutFile 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe' -Uri https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.applicationVersion }}.exe; if ($?) { Write-Host 'Download completed' } else { Write-Host 'Retrying...'; Start-Sleep 10 }}}"
       description: Downloads the Post application
     - commandLine: powershell -NoProfile -Command "Unblock-File -Path 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'"
       description: Ensure we can run the Example Post application
-    - commandLine: powershell -NoProfile "& {$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk'); $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'; $Shortcut.save()}"
+    - commandLine: powershell -NoProfile -Command "& {$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk'); $Shortcut.TargetPath = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'; $Shortcut.save()}"
       description: Creates a shortcut to the Post application on the Administrator desktop
     - commandLine: powershell -NoProfile -Command "[System.Environment]::SetEnvironmentVariable('POST_CD', '{{ .Values.postCode }}', 'Machine')"
       description: Set the POST_CD environment variable machine-wide
