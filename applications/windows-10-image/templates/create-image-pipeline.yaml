@@ -168,7 +168,7 @@ spec:
             metadata:
               annotations:
                 "cdi.kubevirt.io/storage.bind.immediate.requested": "true"
-              name: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ . }}{{ end }}
+              name: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
               namespace: openshift-virtualization-os-images
             spec:
               storage: {}

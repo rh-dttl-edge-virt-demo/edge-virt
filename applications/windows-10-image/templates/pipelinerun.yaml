@@ -1,11 +1,12 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-  generateName: windows-installer-{{ .Release.Name }}-
+  name: windows-installer-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
   labels:
     tekton.dev/pipeline: windows-installer-{{ .Release.Name }}
   annotations:
     argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
   pipelineRef:
     name: windows-installer-{{ .Release.Name }}
