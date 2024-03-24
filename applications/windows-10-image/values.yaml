@@ -1,10 +1,10 @@
 ---
+global: {}
+
 defaultAdminPassword: replaceme
 timeZone: Eastern Standard Time # See `tzutil /l` output on windows for a list of possibilities
 virtioContainerDiskVersion: v1.1.1
 buildTimeout: 2h0m0s
 winTenIsoDownloadUrl: ""
 # winTenIsoDownloadUrl: https://s3.yourdomain.com/yourbucket/yourwin10.iso
-extraCommands:
-  - commandLine: cmd /c shutdown /s /f /t 10
-    description: Final shutdown after commands run
+postInstallPowershell: ""

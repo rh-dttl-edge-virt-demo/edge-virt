@@ -11,13 +11,10 @@ data:
             <component name="Microsoft-Windows-PnpCustomizationsWinPE" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="amd64" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
                 <DriverPaths>
                     <PathAndCredentials wcm:action="add" wcm:keyValue="1">
-                        <Path>E:\viostor\w10\amd64</Path>
+                        <Path>E:\amd64\2k19</Path>
                     </PathAndCredentials>
                     <PathAndCredentials wcm:action="add" wcm:keyValue="2">
-                        <Path>E:\NetKVM\w10\amd64</Path>
-                    </PathAndCredentials>
-                    <PathAndCredentials wcm:action="add" wcm:keyValue="3">
-                        <Path>E:\viorng\w10\amd64</Path>
+                        <Path>E:\NetKVM\2k19\amd64</Path>
                     </PathAndCredentials>
                 </DriverPaths>
             </component>
@@ -155,39 +152,51 @@ data:
                 <DisableAutoDaylightTimeSet>false</DisableAutoDaylightTimeSet>
                 <FirstLogonCommands>
                     <SynchronousCommand wcm:action="add">
-                        <Description>Control Panel View</Description>
                         <Order>1</Order>
-                        <CommandLine>reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v StartupPage /t REG_DWORD /d 1 /f</CommandLine>
-                        <RequiresUserInput>true</RequiresUserInput>
-                    </SynchronousCommand>
-                    <SynchronousCommand wcm:action="add">
-                        <Order>2</Order>
-                        <Description>Control Panel Icon Size</Description>
+                        <Description>Execute final powershell</Description>
                         <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v AllItemsIconView /t REG_DWORD /d 0 /f</CommandLine>
+                        <CommandLine>powershell -ExecutionPolicy Bypass -NoExit -NoProfile F:\post-install.ps1</CommandLine>
                     </SynchronousCommand>
-                    <SynchronousCommand wcm:action="add">
-                        <Order>3</Order>
-                        <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>cmd /C wmic useraccount where name="Administrator" set PasswordExpires=false</CommandLine>
-                        <Description>Password Never Expires</Description>
-                    </SynchronousCommand>
-                    <SynchronousCommand wcm:action="add">
-                        <Order>4</Order>
-                        <Description>Remove AutoAdminLogon</Description>
-                        <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_SZ /d 0 /f</CommandLine>
-                    </SynchronousCommand>
-                    {{- range $i, $command := (.Values.extraCommands) }}
-                    <SynchronousCommand wcm:action="add">
-                        <Order>{{ add $i 5 }}</Order>
-                        <RequiresUserInput>false</RequiresUserInput>
-                        <CommandLine>{{ tpl $command.commandLine $ }}</CommandLine>
-                        <Description>{{ $command.description }}</Description>
-                    </SynchronousCommand>
-                    {{- end }}
                 </FirstLogonCommands>
                 <TimeZone>{{ .Values.timeZone }}</TimeZone>
             </component>
         </settings>
     </unattend>
+  post-install.ps1: |-
+    #####################################
+    # Perform some basic configurations #
+    #####################################
+
+    # Configure legacy control panel view
+    Start-Process reg -Wait -ArgumentList 'add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v StartupPage /t REG_DWORD /d 1 /f'
+    # Modify control panel icon size
+    Start-Process reg -Wait -ArgumentList 'add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v AllItemsIconView /t REG_DWORD /d 0 /f'
+    # Remove automatic admin login
+    Start-Process reg -Wait -ArgumentList 'add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_SZ /d 0 /f'
+    # Prevent password expiration
+    Start-Process wmic -Wait -ArgumentList 'useraccount where name="Administrator" set PasswordExpires=false'
+
+    # Install all remaining VirtIO drivers
+    Start-Process msiexec -Wait -ArgumentList '/i e:\virtio-win-gt-x64.msi /qn /passive /norestart'
+    # Install qemu Guest Agent
+    Start-Process msiexec -Wait -ArgumentList '/i e:\guest-agent\qemu-ga-x86_64.msi /qn /passive /norestart'
+
+    # Enable RDP
+    Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
+    Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    {{ if .Values.postInstallPowershell }}
+    #####################################
+    # Perform custom post-install steps #
+    #####################################
+    {{ tpl .Values.postInstallPowershell $ | nindent 4 }}
+    {{ end }}
+    #####################################
+    # Finalize installation via sysprep #
+    #####################################
+
+    # Prevent picking up old autounattend.xml
+    mv C:\Windows\Panther\unattend.xml C:\Windows\Panther\unattend.install.xml
+    # Eject disk to prevent additional sysprep pickup
+    (New-Object -COM Shell.Application).NameSpace(17).ParseName('F:').InvokeVerb('Eject')
+    # Perform full sysprep
+    C:\Windows\System32\Sysprep\sysprep.exe /generalize /oobe /shutdown /mode:vm
