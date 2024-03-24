@@ -8,12 +8,12 @@ data:
     <?xml version="1.0" encoding="utf-8"?>
     <unattend xmlns="urn:schemas-microsoft-com:unattend">
         <settings pass="windowsPE">
-            <component name="Microsoft-Windows-PnpCustomizationsWinPE" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" processorArchitecture="amd64" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+            <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
                 <DriverPaths>
-                    <PathAndCredentials wcm:action="add" wcm:keyValue="1">
+                    <PathAndCredentials wcm:action="add" wcm:keyValue="4b29ba63">
                         <Path>E:\amd64\2k19</Path>
                     </PathAndCredentials>
-                    <PathAndCredentials wcm:action="add" wcm:keyValue="2">
+                    <PathAndCredentials wcm:action="add" wcm:keyValue="25fe51ea">
                         <Path>E:\NetKVM\2k19\amd64</Path>
                     </PathAndCredentials>
                 </DriverPaths>
@@ -128,7 +128,7 @@ data:
                     <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
                     <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
                     <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
-                    <NetworkLocation>Home</NetworkLocation>
+                    <NetworkLocation>Work</NetworkLocation>
                     <SkipUserOOBE>true</SkipUserOOBE>
                     <SkipMachineOOBE>true</SkipMachineOOBE>
                     <ProtectYourPC>3</ProtectYourPC>
