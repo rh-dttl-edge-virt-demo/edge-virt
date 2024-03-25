@@ -6,9 +6,9 @@ global:
 windows10Image:
   postInstallPowershell: |-
     # Wait for networking before performing the download
-    do {
+    Do {
       $ping = Test-Connection -Comp kubevirt.io -Count 1 -Quiet
-    } until (
+    } Until (
       $ping
     )
 
@@ -24,7 +24,7 @@ windows10Image:
 
     # Configure the shortcut
     $WshShell = New-Object -comObject WScript.Shell
-    $Shortcut = $WshShell.CreateShortcut('C:\Users\Administrator\Desktop\ExamplePostApp.lnk')
+    $Shortcut = $WshShell.CreateShortcut('C:\Users\Public\Desktop\ExamplePostApp.lnk')
     $Shortcut.TargetPath = $AppLoc
     $Shortcut.save()
 

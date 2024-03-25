@@ -115,8 +115,9 @@ spec:
                           cdrom:
                             bus: sata
                       interfaces:
-                        - bridge: {}
+                        - masquerade: {}
                           name: default
+                          model: e1000e
                       inputs:
                         - type: tablet
                           bus: usb
