@@ -196,6 +196,31 @@ spec:
       taskRef:
         kind: Task
         name:  modify-data-object
+    - name: create-data-source
+      displayName: Configure template
+      description: Wires the application to use the new disk image snapshot, instead of the previously customized image
+      params:
+        - name: manifest
+          value: |
+            apiVersion: cdi.kubevirt.io/v1beta1
+            kind: DataSource
+            metadata:
+              name: windows-10-{{ .Release.Name }}
+              namespace: openshift-virtualization-os-images
+            spec:
+              source:
+                pvc:
+                  name: $(tasks.create-root-dv.results.name)
+                  namespace: openshift-virtualization-os-images
+        - name: waitForSuccess
+          value: "true"
+        - name: allowReplace
+          value: "true"
+      runAfter:
+        - create-base-dv
+      taskRef:
+        kind: Task
+        name:  modify-data-object
   finally:
     - name: cleanup-vm
       displayName: Remove VM

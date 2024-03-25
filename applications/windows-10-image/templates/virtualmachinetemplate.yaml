@@ -167,7 +167,7 @@ parameters:
   name: NAME
 - description: Name of the DataSource to clone
   name: DATA_SOURCE_NAME
-  value: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
+  value: windows-10-{{ .Release.Name }}
 - description: Namespace of the DataSource
   name: DATA_SOURCE_NAMESPACE
   value: openshift-virtualization-os-images
