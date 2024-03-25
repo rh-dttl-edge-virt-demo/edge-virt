@@ -174,7 +174,7 @@ parameters:
   value: openshift-virtualization-os-images
 - description: The port on all nodes to bind for RDP for this VM
   name: NODE_PORT
-  value: 31389
+  value: "31389"
 - description: External traffic policy for the Service
   name: EXTERNAL_TRAFFIC
   value: Cluster
