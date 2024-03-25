@@ -4,4 +4,5 @@ kind: DataSource
 metadata:
   name: windows-10-{{ .Release.Name }}
   namespace: openshift-virtualization-os-images
-spec: {}
+spec:
+  source: {}
