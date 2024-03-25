@@ -32,6 +32,20 @@ metadata:
   name: {{ .Release.Name }}
   namespace: openshift
 objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: ${NAME}-rdp
+  spec:
+    selector:
+      kubevirt.io/domain: ${NAME}
+    ports:
+      - name: rdp
+        protocol: TCP
+        port: 3389
+        targetPort: 3389
+    externalTrafficPolicy: ${EXTERNAL_TRAFFIC}
+    type: ${SERVICE_TYPE}
 - apiVersion: kubevirt.io/v1
   kind: VirtualMachine
   metadata:
@@ -125,6 +139,11 @@ objects:
             interfaces:
             - model: e1000e
               name: default
+              masquerade: {}
+              ports:
+              - name: rdp
+                protocol: TCP
+                port: 3389
           features:
             hyperv:
               spinlocks:
@@ -135,6 +154,7 @@ objects:
             guest: 4Gi
         networks:
         - name: default
+          pod: {}
         terminationGracePeriodSeconds: 3600
         volumes:
         - dataVolume:
@@ -151,3 +171,9 @@ parameters:
 - description: Namespace of the DataSource
   name: DATA_SOURCE_NAMESPACE
   value: openshift-virtualization-os-images
+- description: Type of service to expose
+  name: SERVICE_TYPE
+  value: NodePort
+- description: External traffic policy for the Service
+  name: EXTERNAL_TRAFFIC
+  value: Local
