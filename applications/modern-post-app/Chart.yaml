@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: modern-post-app
+description: A helm chart to include the Modern Post Application with values
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+
+dependencies:
+  - name: modern-post-application
+    version: 0.1.2
+    repository: https://rh-dttl-edge-virt-demo.github.io/ExamplePostApp-Modernized
