@@ -44,8 +44,9 @@ objects:
         protocol: TCP
         port: 3389
         targetPort: 3389
+        nodePort: ${NODE_PORT}
     externalTrafficPolicy: ${EXTERNAL_TRAFFIC}
-    type: ${SERVICE_TYPE}
+    type: NodePort
 - apiVersion: kubevirt.io/v1
   kind: VirtualMachine
   metadata:
@@ -57,7 +58,7 @@ objects:
             "path": "jsonpath::.spec.domain.memory.guest",
             "rule": "integer",
             "message": "This VM requires more memory.",
-            "min": 2147483648
+            "min": 4294967296
           }, {
             "name": "windows-virtio-bus",
             "path": "jsonpath::.spec.domain.devices.disks[*].disk.bus",
@@ -171,9 +172,9 @@ parameters:
 - description: Namespace of the DataSource
   name: DATA_SOURCE_NAMESPACE
   value: openshift-virtualization-os-images
-- description: Type of service to expose
-  name: SERVICE_TYPE
-  value: NodePort
+- description: The port on all nodes to bind for RDP for this VM
+  name: NODE_PORT
+  value: 31389
 - description: External traffic policy for the Service
   name: EXTERNAL_TRAFFIC
-  value: Local
+  value: Cluster
