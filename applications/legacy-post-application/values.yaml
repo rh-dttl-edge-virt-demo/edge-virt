@@ -2,21 +2,23 @@
 global:
   postCode: "EXAMPLE"
   applicationVersion: v0.1.0
+  downloadTimeoutSec: 30
 
 windows10Image:
   postInstallPowershell: |-
     # Wait for networking before performing the download
     Do {
-      $ping = Test-Connection -Comp kubevirt.io -Count 1 -Quiet
+      $ping = Test-Connection -Comp github.com -Count 1 -Quiet
     } Until (
       $ping
     )
 
     # Download the legacy app
     $AppLoc = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'
+    $DownloadUrl = 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe'
     New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'
     Do {
-      Invoke-RestMethod -OutFile $AppLoc -Uri 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe' -TimeoutSec 30 -UseBasicParsing
+      Invoke-RestMethod -OutFile $AppLoc -Uri $DownlaodUrl -TimeoutSec {{ .Values.global.downloadTimeoutSec }} -UseBasicParsing
     } While (
       -not (Test-Path $AppLoc)
     )

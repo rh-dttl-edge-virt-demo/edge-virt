@@ -163,6 +163,7 @@ data:
         </settings>
     </unattend>
   post-install.ps1: |-
+    Set-PSDebug -Trace 1
     #####################################
     # Perform some basic configurations #
     #####################################
