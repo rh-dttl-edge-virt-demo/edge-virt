@@ -1,7 +1,7 @@
 ---
 global:
   postCode: "EXAMPLE"
-  applicationVersion: v0.1.0
+  applicationVersion: v0.1.1
   downloadTimeoutSec: 30
 
 windows10Image:
