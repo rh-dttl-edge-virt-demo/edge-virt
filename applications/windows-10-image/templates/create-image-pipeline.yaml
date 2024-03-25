@@ -210,8 +210,8 @@ spec:
             spec:
               source:
                 pvc:
-                  name: $(tasks.create-base-dv.results.name)
-                  namespace: $(tasks.create-base-dv.results.namespace)
+                  name: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
+                  namespace: openshift-virtualization-os-images
         - name: waitForSuccess
           value: "true"
         - name: allowReplace
