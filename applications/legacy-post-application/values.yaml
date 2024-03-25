@@ -16,7 +16,7 @@ windows10Image:
     $AppLoc = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'
     New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'
     Do {
-      Invoke-RestMethod -OutFile $AppLoc -Uri 'https://s3.jharmison.com/public/ExamplePostApp-{{ .Values.global.applicationVersion }}.exe' -TimeoutSec 10 -UseBasicParsing
+      Invoke-RestMethod -OutFile $AppLoc -Uri 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe' -TimeoutSec 10 -UseBasicParsing
     } While (
       -not (Test-Path $AppLoc)
     )
