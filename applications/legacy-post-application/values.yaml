@@ -18,7 +18,7 @@ windows10Image:
     $DownloadUrl = 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe'
     New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'
     Do {
-      Invoke-RestMethod -OutFile $AppLoc -Uri $DownlaodUrl -TimeoutSec {{ .Values.global.downloadTimeoutSec }} -UseBasicParsing
+      Invoke-RestMethod -OutFile $AppLoc -Uri $DownloadUrl -TimeoutSec {{ .Values.global.downloadTimeoutSec }} -UseBasicParsing
     } While (
       -not (Test-Path $AppLoc)
     )
