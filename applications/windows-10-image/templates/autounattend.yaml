@@ -175,6 +175,8 @@ data:
     Start-Process reg -Wait -ArgumentList 'add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" /v AllItemsIconView /t REG_DWORD /d 0 /f'
     # Remove automatic admin login
     Start-Process reg -Wait -ArgumentList 'add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" /v AutoAdminLogon /t REG_SZ /d 0 /f'
+    # Disable Windows SmartScreen Filter
+    Start-Process reg -Wait -ArgumentList 'add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System" /v EnableSmartScreen /t REG_DWORD /d 0 /f'
     # Prevent password expiration
     Start-Process wmic -Wait -ArgumentList 'useraccount where name="Administrator" set PasswordExpires=false'
 
