@@ -18,11 +18,13 @@ windows10Image:
     $AppLoc = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'
     $DownloadUrl = 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe'
     New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'
+    $CurlArgs = @"
+    -m {{ .Values.global.downloadTimeoutSec }} -Lo "$AppLoc" "$DownloadUrl"
+    "@
     Do {
-      Invoke-RestMethod -OutFile $AppLoc -Uri $DownloadUrl -TimeoutSec {{ .Values.global.downloadTimeoutSec }} -UseBasicParsing -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
-    } While (
-      -not (Test-Path $AppLoc)
-    )
+      ipconfig /flushdns
+      Start-Process curl.exe -Wait -ArgumentList $CurlArgs
+    } Until (Test-Path $AppLoc)
     Unblock-File -Path $AppLoc
 
     # Configure the shortcut
