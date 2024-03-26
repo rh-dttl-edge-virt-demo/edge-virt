@@ -44,7 +44,7 @@ objects:
         protocol: TCP
         port: 3389
         targetPort: 3389
-        nodePort: ${NODE_PORT}
+        nodePort: ${{ "{{" }}NODE_PORT{{ "}}" }}
     externalTrafficPolicy: ${EXTERNAL_TRAFFIC}
     type: NodePort
 - apiVersion: kubevirt.io/v1
