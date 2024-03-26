@@ -14,6 +14,7 @@ windows10Image:
     )
 
     # Download the legacy app
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $AppLoc = 'C:\Program Files\ExamplePostApp\ExamplePostApp.exe'
     $DownloadUrl = 'https://github.com/rh-dttl-edge-virt-demo/ExamplePostApp/releases/download/{{ .Values.global.applicationVersion }}/ExamplePostApp.exe'
     New-Item -ItemType Directory -Force -Path 'C:\Program Files\ExamplePostApp'
