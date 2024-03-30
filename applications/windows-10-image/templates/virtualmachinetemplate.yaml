@@ -103,7 +103,7 @@ objects:
         storage:
           resources:
             requests:
-              storage: 20Gi
+              storage: {{ .Values.template.diskSize }}
     running: false
     template:
       metadata:
@@ -126,7 +126,7 @@ objects:
                 tickPolicy: catchup
           cpu:
             cores: 1
-            sockets: 1
+            sockets: {{ .Values.template.cpuCores }}
             threads: 1
           devices:
             disks:
@@ -152,7 +152,7 @@ objects:
           machine:
             type: pc-q35-rhel9.2.0
           memory:
-            guest: 4Gi
+            guest: {{ .Values.template.memory }}
         networks:
         - name: default
           pod: {}
