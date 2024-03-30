@@ -12,3 +12,8 @@ spec:
     name: windows-installer-{{ .Release.Name }}
   timeouts:
     pipeline: {{ .Values.buildTimeout }}
+  {{- with .Values.global.gitCommit }}
+  params:
+    - name: uniqueResourceName
+      value: windows-10-{{ $.Release.Name }}-{{ substr 0 7 . }}
+  {{- end }}

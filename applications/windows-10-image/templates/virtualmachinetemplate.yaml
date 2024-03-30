@@ -86,7 +86,7 @@ objects:
     labels:
       app: ${NAME}
       vm.kubevirt.io/template: {{ .Release.Name }}
-      vm.kubevirt.io/template.revision: {{ if .Values.global.gitCommit }}{{ substr 0 7 .Values.global.gitCommit | quote }}{{ else }}"1"{{ end }}
+      vm.kubevirt.io/template.revision: "1"
       vm.kubevirt.io/template.version: v0.26.0
     name: ${NAME}
   spec:

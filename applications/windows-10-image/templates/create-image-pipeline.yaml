@@ -13,6 +13,9 @@ spec:
     - name: autounattendConfigMapName
       default: windows-10-autounattend-{{ .Release.Name }}
       type: string
+    - name: uniqueResourceName
+      type: string
+      default: windows-10-{{ .Release.Name }}
   tasks:
     - name: create-source-dv
       displayName: Import installer ISO
@@ -179,7 +182,7 @@ spec:
             metadata:
               annotations:
                 "cdi.kubevirt.io/storage.bind.immediate.requested": "true"
-              name: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
+              name: $(params.uniqueResourceName)
               namespace: openshift-virtualization-os-images
             spec:
               storage: {}
@@ -210,7 +213,7 @@ spec:
             spec:
               source:
                 pvc:
-                  name: windows-10-{{ .Release.Name }}{{ with .Values.global.gitCommit }}-{{ substr 0 7 . }}{{ end }}
+                  name: $(params.uniqueResourceName)
                   namespace: openshift-virtualization-os-images
         - name: waitForSuccess
           value: "true"
