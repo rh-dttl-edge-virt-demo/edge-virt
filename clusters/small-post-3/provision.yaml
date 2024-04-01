@@ -1,0 +1,14 @@
+---
+cluster:
+  name: small-post-3
+  env: irrinki-house
+  controlPlaneNodes: 1
+  workerNodes: 0
+  networking:
+    machineNetwork:
+      - cidr: 192.168.1.0/24
+
+nodes:
+  sno:
+    spec:
+      installation_disk_id: /dev/disk/by-id/wwn-0x500a0751e8883984
