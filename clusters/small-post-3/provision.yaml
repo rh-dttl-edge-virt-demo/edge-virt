@@ -11,4 +11,4 @@ cluster:
 nodes:
   sno:
     spec:
-      installation_disk_id: /dev/disk/by-id/wwn-0x500a0751e8883984
+      installation_disk_id: /dev/disk/by-id/wwn-0x500a0751e889f6a0
