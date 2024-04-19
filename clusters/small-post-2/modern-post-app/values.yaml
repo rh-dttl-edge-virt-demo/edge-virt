@@ -1,3 +1,5 @@
 ---
 modern-post-application:
   postCode: BLY.TEST
+  image:
+    tag: 0.1.0
