@@ -8,5 +8,5 @@ appVersion: 0.1.0
 
 dependencies:
   - name: modern-post-application
-    version: 0.1.3
+    version: 0.1.5
     repository: https://rh-dttl-edge-virt-demo.github.io/ExamplePostApp-Modernized
