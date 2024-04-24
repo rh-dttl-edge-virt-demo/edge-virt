@@ -1,5 +1,5 @@
 ---
 modern-post-application:
-  postCode: FAKE.TEST
+  postCode: LINDSEY.TEST
   image:
-    tag: 0.1.0
+    tag: 0.1.5
