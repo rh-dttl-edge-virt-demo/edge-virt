@@ -1,5 +1,5 @@
 ---
 modern-post-application:
-  postCode: Nazir.Post
+  postCode: sandeep.Post
   image:
-    tag: 0.1.1
+    tag: 0.1.5
