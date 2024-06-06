@@ -7,10 +7,10 @@ is_iso() {
 	file "$1" | grep -qF 'ISO 9660'
 }
 cert_manager_status() {
-	bin/oc --insecure-skip-tls-verify=true get application.argoproj -n openshift-gitops cert-manager -ojsonpath='{.status.sync.status}'
+	bin/oc --insecure-skip-tls-verify=true get application.argoproj -n openshift-gitops cert-manager -ojsonpath='{.status.sync.status}' 2>/dev/null
 }
 api_server_condition() {
-	bin/oc --insecure-skip-tls-verify=true get co kube-apiserver -ogo-template='{{ range .status.conditions }}{{ if eq .type "'"$1"'" }}{{ .status }}{{ end }}{{ end }}'
+	bin/oc --insecure-skip-tls-verify=true get co kube-apiserver -ogo-template='{{ range .status.conditions }}{{ if eq .type "'"$1"'" }}{{ .status }}{{ end }}{{ end }}' 2>/dev/null
 }
 api_updated() {
 	if [ "$(cert_manager_status)" = "Synced" ]; then
