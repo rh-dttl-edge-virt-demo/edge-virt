@@ -1,6 +1,6 @@
 CLUSTER_NAME := $(shell hack/yq .metadata.name install-config.yaml)
 BASE_DOMAIN := $(shell hack/yq .baseDomain install-config.yaml)
-CLUSTER_VERSION := 4.14.6
+CLUSTER_VERSION := 4.15.15
 
 .PHONY: all
 all: bootstrap isos

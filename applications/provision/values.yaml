@@ -6,7 +6,7 @@ cluster:
   name: example-cluster
   baseDomain: rh-dttl.edgelab.dev
   env: harmison-house
-  version: 4.14.6
+  version: 4.15.15
   controlPlaneNodes: 3
   workerNodes: 3
   platformType: None
@@ -20,4 +20,4 @@ cluster:
 
 nodes: []
 
-openshiftToolsImage: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:535ce24b5f1894d2a07bfa7eed7ad028ffde0659693f2a571ac4712a21cd028c
+openshiftToolsImage: quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:e87e52eb6c12d664b61afed2a10afdce19f96736f99ec1f018ce9fd347cc2b23
