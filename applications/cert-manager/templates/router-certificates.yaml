@@ -28,7 +28,7 @@ spec:
   defaultCertificate:
     name: router-cert
 {{- end }}
-{{- if .Values.certificates.nlbRouter.managed -}}
+{{ if .Values.certificates.nlbRouter.managed -}}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
