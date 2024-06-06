@@ -1,6 +1,6 @@
 ---
 pullSecret: <your actual pull secret>
-sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGz5L05PFUIOBpqPfyGynU4PgCOgDoBjSIh+y3f17S02 admin@hub.rh-dttl.edgelab.dev
+sshKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP8scn10/vNzOxwUyiqUiSNGHECHGAyJIZ1hahat3moa admin@hub.rh-dttl.edgelab.dev
 
 environments:
   - name: harmison-house
