@@ -17,5 +17,5 @@ spec:
   port:
     targetPort: assisted-image-service
   tls:
-    termination: reencrypt
+    termination: passthrough
   wildcardPolicy: None
