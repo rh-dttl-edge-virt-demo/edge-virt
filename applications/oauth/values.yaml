@@ -7,7 +7,6 @@ github:
 removeKubeAdmin: true
 admins:
   - jharmison-redhat
-  - kellyhair
   - lindseyvolk
   - Venus-Izadi
   - DoShackathon
