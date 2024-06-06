@@ -17,17 +17,22 @@ Usage
 1. Edit install-config.yaml, changing the base domain to the top-level Route53 domain for your environment (or bring your own domain, configuration not described here).
     - **Note**: You can edit other things in the file as well, changing the instance count or specifying the instance type of the cluster or selecting an alternative region for example.
 1. Grab your Pull Secret from the [Red Hat Console](https://console.redhat.com/openshift/install/platform-agnostic/user-provisioned) and export the variable in your terminal:
+
     ```shell
     export PULL_SECRET='<paste here>'
     ```
+
 1. Export the variables for API access to AWS from your Open Environment in the same terminal:
+
     ```shell
     export AWS_ACCESS_KEY_ID='<paste here>'
     export AWS_SECRET_ACCESS_KEY='<paste here>'
     ```
+
 1. Optionally, place these lines in a file named `.env` at the repository root
 1. Generate an [age](https://github.com/FiloSottile/age) secret for ArgoCD to use to decrypt chart secrets
 1. Generate `bootstrap/age-secret.yaml` with the following content:
+
     ```yaml
     apiVersion: v1
     kind: Secret
@@ -38,6 +43,7 @@ Usage
     data:
       argo.txt: <base64-encoded copy of your age secret>
     ```
+
 1. Run `make`
 1. Configure the [git repository](https://github.com/rh-dttl-edge-virt-demo/edge-virt) with a [deploy key](https://github.com/rh-dttl-edge-virt-demo/edge-virt/settings/keys), pasting in the contents of `install/argo_ed25519.pub`.
 1. Wire up the appropriate secrets for on-cluster activities like the equivalent key in `secrets.yaml` for the [secret access key](https://github.com/rh-dttl-edge-virt-demo/edge-virt/blob/main/applications/cert-manager/values.yaml#L21) that cert-manager needs to answer DNS challenges. There are other things in the applications, those are out of scope for the readme.
@@ -45,7 +51,7 @@ Usage
 What it does (updated as we add things)
 ---
 
-1. Downloads the latest OpenShift 4.14 stable installer
+1. Downloads the latest OpenShift 4.15 stable installer
 1. Generates an SSH key for use with this cluster
 1. Templates the install-config.yaml file with your pull secret and the generated SSH key
 1. Installs OpenShift on AWS using IPI
