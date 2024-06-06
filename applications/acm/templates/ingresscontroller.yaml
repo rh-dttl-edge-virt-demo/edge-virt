@@ -9,7 +9,7 @@ metadata:
 spec:
   domain: {{ .Values.nlbDomain }}
   defaultCertificate:
-    name: router-nlb
+    name: router-nlb-cert
   routeSelector:
     matchLabels:
       router-type: nlb
