@@ -1,4 +1,0 @@
----
-cluster:
-  prometheusK8s:
-    collectionProfile: minimal
