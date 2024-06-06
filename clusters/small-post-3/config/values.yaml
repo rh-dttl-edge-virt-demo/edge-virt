@@ -12,7 +12,3 @@ kubelet:
     systemReserved:
       cpu: 1000m
       memory: 1Gi
-
-desiredUpdate:
-  version: 4.14.6
-  architecture: Multi
