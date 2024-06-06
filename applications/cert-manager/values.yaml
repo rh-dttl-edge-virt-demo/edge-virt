@@ -40,3 +40,8 @@ certificates:
     dnsNames:
       - apps.hub.rh-dttl.edgelab.dev
       - "*.apps.hub.rh-dttl.edgelab.dev"
+  nlbRouter:
+    managed: true
+    dnsNames:
+      - nlb-apps.hub.rh-dttl.edgelab.dev
+      - "*.nlb-apps.hub.rh-dttl.edgelab.dev"
