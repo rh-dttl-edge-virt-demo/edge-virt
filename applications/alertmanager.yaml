@@ -19,10 +19,10 @@ spec:
     helm:
       valueFiles:
         - secrets+age-import:///helm-secrets-private-keys/argo.txt?secrets.enc.yaml
-    ignoreDifferences:
-      - kind: Secret
-        jsonPointers:
-          - /metadata/labels
+  ignoreDifferences:
+    - kind: Secret
+      jsonPointers:
+        - /metadata/labels
   syncPolicy:
     automated:
       prune: true
