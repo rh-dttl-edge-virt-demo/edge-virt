@@ -7,7 +7,7 @@ metadata:
   namespace: {{ $env.name }}
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: {{ $env.location }}
-    networkType: static
+    networkType: {{ $env.networkType | default "dhcp" }}
 spec:
   cpuArchitecture: x86_64
   ipxeScriptType: DiscoveryImageAlways
