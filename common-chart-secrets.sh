@@ -2,7 +2,7 @@
 public_keys=(
 	age1px4xaxcy73xdqdrxadc8yecqksf4le3n0l2l9h0xj2m5eneljvwq3asw2h # argocd
 	age1ky5amdnkwzj03gwal0cnk7ue7vsd0n64pxm50nxgycssp7vgpqvq9s7lyw # james
-        age1r0tcnwmhkhv95hcdxtqudvk4d3w7pe4y57d6y5k7mrah0ay40stqc0ayz8 # satish
+	age1r0tcnwmhkhv95hcdxtqudvk4d3w7pe4y57d6y5k7mrah0ay40stqc0ayz8 # satish
 )
 keystring="$(
 	IFS=,
