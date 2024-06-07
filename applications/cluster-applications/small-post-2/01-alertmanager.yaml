@@ -18,6 +18,10 @@ spec:
       valueFiles:
         - secrets+age-import:///helm-secrets-private-keys/argo.txt?secrets.enc.yaml
         - /clusters/{{ $.Values.cluster.name }}/provision.yaml
+  ignoreDifferences:
+    - kind: Secret
+      jsonPointers:
+        - /metadata/labels
   syncPolicy:
     automated:
       prune: true
