@@ -1,0 +1,14 @@
+---
+cluster:
+  name: small-post-4
+  env: harmison-house
+  controlPlaneNodes: 1
+  workerNodes: 0
+  networking:
+    machineNetwork:
+      - cidr: 10.1.1.0/24
+
+nodes:
+  ms01:
+    spec:
+      installation_disk_id: /dev/disk/by-id/nvme-eui.e8238fa6bf530001001b448b47cec968

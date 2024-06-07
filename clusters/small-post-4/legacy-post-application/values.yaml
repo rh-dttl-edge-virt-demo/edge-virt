@@ -1,0 +1,9 @@
+---
+global:
+  postCode: HRM.DEV2
+  applicationVersion: v0.1.1
+
+windows10Image:
+  template:
+    cpuCores: 4
+    memory: 8Gi
