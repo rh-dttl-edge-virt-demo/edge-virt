@@ -1,5 +1,0 @@
----
-modern-post-application:
-  postCode: HRM.DEV2
-  imagePullSecrets:
-    - name: pull-secret
