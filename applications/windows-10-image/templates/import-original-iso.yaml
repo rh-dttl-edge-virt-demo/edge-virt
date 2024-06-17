@@ -12,7 +12,7 @@ spec:
     resources:
       requests:
         storage: 7Gi
-    volumeMode: Filesystem
+    volumeMode: Block
   source:
     http:
       url: {{ quote .Values.winTenIsoDownloadURL }}

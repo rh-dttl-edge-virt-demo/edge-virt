@@ -36,7 +36,7 @@ spec:
                 resources:
                   requests:
                     storage: 7Gi
-                volumeMode: Filesystem
+                volumeMode: Block
               source:
                 pvc:
                   name: windows-10-iso
@@ -67,7 +67,7 @@ spec:
                 resources:
                   requests:
                     storage: 20Gi
-                volumeMode: Filesystem
+                volumeMode: Block
               source:
                 blank: {}
         - name: waitForSuccess
@@ -185,7 +185,13 @@ spec:
               name: $(params.uniqueResourceName)
               namespace: openshift-virtualization-os-images
             spec:
-              storage: {}
+              pvc:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 20Gi
+                volumeMode: Block
               source:
                 pvc:
                   name: $(tasks.create-root-dv.results.name)
