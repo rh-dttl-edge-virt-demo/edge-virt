@@ -1,5 +1,5 @@
 ---
 modern-post-application:
-  postCode: TRT.WSF
+  postCode: DALLIN.WSF
   image:
-    tag: 0.1.1
+    tag: 0.1.5
