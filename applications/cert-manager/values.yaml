@@ -13,8 +13,8 @@ acme:
       - type: dns
         dnsConfig:
           route53:
-            accessKeyID: AKIAYXH2S2VGCXPPTBC7
-            hostedZoneID: Z08911972ABVHLQPO8VYV
+            accessKeyID: AKIAYYUZLRSYU3KC4JNW
+            hostedZoneID: Z02971101H8HE1LIL55RW
             region: us-east-2
             secretAccessKeySecretRef:
               key: secret-access-key
