@@ -1,5 +1,5 @@
 ---
 modern-post-application:
-  postCode: TEST.WSF
+  postCode: MikeLizDave.WSF
   image:
-    tag: 0.1.6
+    tag: 0.1.1
